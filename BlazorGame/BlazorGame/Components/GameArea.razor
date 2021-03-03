@@ -1,0 +1,80 @@
+﻿@using BlazorGame.Models
+
+@if (_game == null)
+{
+    <em>Loading...</em>
+}
+else
+{
+    <div class="game-area" tabindex="0" @onclick="_game.StartStopGame" @onkeyup="HandleKeyUp">
+        <div class="fog" hidden="@_hideFog"></div>
+        <div class="dialog" hidden="@_hideStartDialog">
+            <h1>Click to Start</h1>
+        </div>
+        <div class="dialog" hidden="@_hideGameOverDialog">
+            <h1>Game Over</h1>
+            <p>Click to Play Again</p>
+        </div>
+        <div class="stats">
+            <div class="timer-label">TIME</div>
+            <div class="timer-value">@_game.GameTimer.Elapsed.ToString(@"mm\:ss\:ff")</div>
+            <div class="score-label">SCORE</div>
+            <div class="score-value">@_game.Score</div>
+            <div class="level-label">STAGE</div>
+            <div class="level-value">@_game.StageNumber</div>
+        </div>
+        <div class="sky @_skyCss">
+        </div>
+        <div class="ground @_groundCss">
+            <div class="road">
+                <div class="median-strip">
+                    @foreach (var medianStripe in _game.MedianStripes)
+                    {
+                        <MedianStripes Model="medianStripe" />
+                    }
+                </div>
+                @foreach (var aiCar in _game.AICars)
+                {
+                    <AICar Model="aiCar" />
+                }
+                <PlayerCar Model="_game.PlayerCar" />
+            </div>
+        </div></div>
+
+}
+
+@code {
+
+    GameModel _game { get; set; }
+
+    private bool _hideStartDialog => _game.IsRunning || _game.PlayerCar.HasCollision;
+    private bool _hideGameOverDialog => !_game.PlayerCar.HasCollision;
+    private string _skyCss => $"sky-{_game.Stages[_game.StageIndex]}";
+    private string _groundCss => $"ground-{_game.Stages[_game.StageIndex]}";
+    private bool _hideFog => !_game.ShowFog;
+
+    protected override void OnInitialized()
+    {
+        _game = new GameModel();
+        _game.MainLoopCompleted += (o, e) => StateHasChanged();
+    }
+
+    void HandleKeyUp(KeyboardEventArgs e)
+    {
+        if(e.Key == "ArrowLeft")
+        {
+            _game.MovePlayerCarLeft();
+        }
+
+        if(e.Key == "ArrowRight")
+        {
+            _game.MovePlayerCarRight();
+        }
+
+        if(e.Key == " ")
+        {
+            _game.StartStopGame();
+        }
+
+    }
+}

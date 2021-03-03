@@ -1,0 +1,12 @@
+﻿@using Models;
+
+<div class="@_id" style="@_css"/>
+
+@code {
+
+    [Parameter] public MedianStripeModel Model { get; set; }
+
+    string _css => $"top: {Model.Top}px; height: {Model.Height}px; width: 5px; background-color: white; position:absolute;";
+    string _id => $"id-{Model.Id}";
+
+}

@@ -1,0 +1,12 @@
+﻿@using Models;
+
+<div class="ai-car @_color-car @_css" style="@_styles"/>
+
+@code {
+    [Parameter]
+    public AICarModel Model { get; set; }
+
+    private string _color => Model.Color.ToLower();
+    private string _css => Model.HasCollision ? "car-shake" : string.Empty;
+    private string _styles => $"top: {Model.Top}px; left: {Model.LeftSide}px; height: {Model.Height}px; width: {Model.Width}px";
+}

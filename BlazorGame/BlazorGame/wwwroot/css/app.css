@@ -1,0 +1,295 @@
+﻿body {
+    display: flex;
+}
+
+.game-area {
+    width: 500px;
+    height: 640px;
+    position: absolute;
+    left: 80px;
+}
+
+.border-left {
+    width: 80px;
+    height: 730px;
+    position: absolute;
+    background-color: white;
+    z-index: +1;
+}
+
+.border-right {
+    left: 580px;
+    width: 80px;
+    height: 730px;
+    position: absolute;
+    background-color: white;
+    z-index: +1;
+}
+
+.dialog {
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    width: 50%;
+    margin-left: -25%;
+    text-align: center;
+    border-width: 3px;
+    border-style: solid;
+    border-color: navy;
+    background-color: aliceblue;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    color: red;
+    z-index: 5;
+}
+
+.hide {
+    visibility: collapse;
+    height: 0px;
+}
+
+.sky {
+    width: 500px;
+    height: 330px;
+    position: absolute;
+}
+
+.sky-rural {
+    background-image: url(../images/game-sky-rural.png);
+}
+
+.sky-desert {
+    background-image: url(../images/game-sky-desert.png);
+}
+
+.sky-alpine {
+    background-image: url(../images/game-sky-alpine.png);
+}
+
+.sky-city {
+    background-image: url(../images/game-sky-city.png);
+}
+
+.sky-coast {
+    background-image: url(../images/game-sky-coast.png);
+}
+
+.ground {
+    top: 330px;
+    width: 500px;
+    height: 310px;
+    position: absolute;
+    overflow: hidden;
+    z-index: -3;
+}
+
+.ground-rural {
+    background-image: url(../images/game-ground-rural.png);
+}
+
+.ground-desert {
+    background-image: url(../images/game-ground-desert.png);
+}
+
+.ground-alpine {
+    background-image: url(../images/game-ground-alpine.png);
+}
+
+.ground-city {
+    background-image: url(../images/game-ground-city.png);
+}
+
+.ground-coast {
+    background-image: url(../images/game-ground-coast.png);
+}
+
+
+.road {
+    border-bottom: 310px solid #555;
+    border-left: 185px solid transparent;
+    border-right: 185px solid transparent;
+    height: 0px;
+    width: 130px;
+    position: absolute;
+    z-index: -2;
+}
+
+.median-strip {
+    width: 5px;
+    left: 50%;
+    top: -20px;
+    height: 410px;
+    position: absolute;
+    z-index: -1;
+}
+
+.player-car {
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 38px;
+    width: 92px;
+    position: absolute;
+    z-index: 0;
+}
+
+.ai-car {
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 38px;
+    width: 92px;
+    position: absolute;
+    z-index: 0;
+}
+
+.red-car {
+    background-image: url(../images/red-car.png);
+}
+
+.green-car {
+    background-image: url(../images/green-car.png);
+}
+
+.yellow-car {
+    background-image: url(../images/yellow-car.png);
+}
+
+.blue-car {
+    background-image: url(../images/blue-car.png);
+}
+
+.purple-car {
+    background-image: url(../images/purple-car.png);
+}
+
+.orange-car {
+    background-image: url(../images/orange-car.png);
+}
+
+.car-shake {
+    animation: shake 3s;
+}
+
+.fog {
+    position: fixed;
+    width: 500px;
+    top: 0;
+    left: 80px;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(256,256,256,0.8);
+    z-index: 3;
+}
+
+.stats {
+    position: fixed;
+    width: 500px;
+    left: 80px;
+    font-family: Arial, Helvetica, sans-serif;
+    color: black;
+    display: grid;
+    grid-gap: 5px;
+    font-size: x-large;
+    font-weight: bold;
+    margin: 10px;
+    z-index: 5;
+}
+
+.timer-label {
+    grid-row: 1;
+    grid-column: 1;
+}
+
+.timer-value {
+    grid-row: 2;
+    grid-column: 1;
+}
+
+.score-label {
+    grid-row: 1;
+    grid-column: 2;
+}
+
+.score-value {
+    grid-row: 2;
+    grid-column: 2;
+}
+
+.level-label {
+    grid-row: 1;
+    grid-column: 3;
+}
+
+.level-value {
+    grid-row: 2;
+    grid-column: 3;
+}
+
+/*Animations*/
+@keyframes shake {
+    0% {
+        transform: translate(1px, 1px) rotate(0deg);
+    }
+
+    10% {
+        transform: translate(-1px, -2px) rotate(-1deg);
+    }
+
+    20% {
+        transform: translate(-3px, 0px) rotate(1deg);
+    }
+
+    30% {
+        transform: translate(3px, 2px) rotate(0deg);
+    }
+
+    40% {
+        transform: translate(1px, -1px) rotate(1deg);
+    }
+
+    50% {
+        transform: translate(-1px, 2px) rotate(-1deg);
+    }
+
+    60% {
+        transform: translate(-3px, 1px) rotate(0deg);
+    }
+
+    70% {
+        transform: translate(3px, 1px) rotate(-1deg);
+    }
+
+    80% {
+        transform: translate(-1px, -1px) rotate(1deg);
+    }
+
+    90% {
+        transform: translate(1px, 2px) rotate(0deg);
+    }
+
+    100% {
+        transform: translate(1px, -2px) rotate(-1deg);
+    }
+}
+
+
+/*Built-in Blazor Error Styles*/
+
+#blazor-error-ui {
+    background: lightyellow;
+    bottom: 0;
+    box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.2);
+    display: none;
+    left: 0;
+    padding: 0.6rem 1.25rem 0.7rem 1.25rem;
+    position: fixed;
+    width: 100%;
+    z-index: 1000;
+}
+
+    #blazor-error-ui .dismiss {
+        cursor: pointer;
+        position: absolute;
+        right: 0.75rem;
+        top: 0.5rem;
+    }
