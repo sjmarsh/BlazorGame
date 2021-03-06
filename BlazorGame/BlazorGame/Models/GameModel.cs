@@ -11,6 +11,7 @@ namespace BlazorGame.Models
         private int gameSpeed;
         private int medianCounter;
         private int stripeCounter;
+        private bool isCollisionsEnabled;
 
         public GameModel()
         {
@@ -60,6 +61,11 @@ namespace BlazorGame.Models
             }
         }
 
+        public void ToggleCollisionsEnabled()
+        {
+            isCollisionsEnabled = !isCollisionsEnabled;
+        }
+
         private void ResetGame()
         {
             gameSpeed = 1;
@@ -72,6 +78,7 @@ namespace BlazorGame.Models
             GameTimer = new Stopwatch();
             GameTimer.Reset();
             GameTimer.Start();
+            isCollisionsEnabled = true;
         }
 
         private void GameOver()
@@ -118,6 +125,10 @@ namespace BlazorGame.Models
                     StageIndex = 4;
                     gameSpeed = 4;
                     ShowFog = false;
+                }
+                if(GameTimer.Elapsed.TotalMinutes >= 5)
+                {
+                    GameOver();
                 }
 
                 Score++;
@@ -181,6 +192,11 @@ namespace BlazorGame.Models
 
         private bool HasCollision()
         {
+            if(!isCollisionsEnabled)
+            {
+                return false;
+            }
+
             var carCollided = false;
             var carNearPlayer = AICars.FirstOrDefault(a => a.Top == PlayerCar.Top || (a.Bottom >= PlayerCar.Top && a.Top < PlayerCar.Top));
             if (carNearPlayer != null)
