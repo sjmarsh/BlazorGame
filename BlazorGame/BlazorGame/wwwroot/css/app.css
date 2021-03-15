@@ -1,5 +1,11 @@
 ﻿body {
     display: flex;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+h1 {
+    padding: 0px;
+    margin: 0px;
 }
 
 .game-area {
@@ -26,21 +32,23 @@
     z-index: +1;
 }
 
-.dialog {
+.message-area {
     position: absolute;
-    top: 40%;
+    top: 28%;
     left: 50%;
-    width: 50%;
-    margin-left: -25%;
-    text-align: center;
-    border-width: 3px;
-    border-style: solid;
-    border-color: navy;
-    background-color: aliceblue;
-    font-family: Arial, Helvetica, sans-serif;
-    font-weight: bold;
-    color: red;
+    width: 80%;
+    margin-left: -40%;
     z-index: 5;
+}
+
+.dialog {
+    text-align: center;
+    background-color: transparent;
+    color: #fcdd03;
+    text-shadow: 3px 3px 0px #fc4e03;
+    font-size: x-large;
+    font-weight: bold;
+    cursor: pointer;
 }
 
 .hide {
@@ -177,7 +185,7 @@
     left: 80px;
     right: 0;
     bottom: 0;
-    background-color: rgba(256,256,256,0.8);
+    background-color: rgba(256,256,256,0.7);
     z-index: 3;
 }
 
@@ -185,7 +193,6 @@
     position: fixed;
     width: 500px;
     left: 80px;
-    font-family: Arial, Helvetica, sans-serif;
     color: black;
     display: grid;
     grid-gap: 5px;
@@ -224,6 +231,47 @@
     grid-row: 2;
     grid-column: 3;
 }
+
+.high-scores-button {
+    text-align: center;
+    color: #FDF500;
+    font-weight: bold;
+    font-size: x-large;
+    cursor: pointer;
+}
+
+.high-scores {
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    width: 80%;
+    margin-left: -40%;
+    text-align: center;
+    color: #FDF500;
+    background-color: rgba(0, 0, 0, 0.8);
+    z-index: 6;
+}
+
+.high-scores-table {
+    width: 100%;
+    text-align: left;
+    padding: 10px;
+}
+
+.high-scores-close-button {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background: transparent;
+    color: #FDF500;
+    border-style: solid;
+    border-color: #FDF500;
+    cursor: pointer;
+}
+
+    .high-scores-close-button:hover {
+        background: rgba(255, 247, 0, 0.5);
+    }
 
 /*Animations*/
 @keyframes shake {
@@ -271,10 +319,7 @@
         transform: translate(1px, -2px) rotate(-1deg);
     }
 }
-
-
 /*Built-in Blazor Error Styles*/
-
 #blazor-error-ui {
     background: lightyellow;
     bottom: 0;

@@ -21,15 +21,15 @@ namespace BlazorGame.Models
         public EventHandler MainLoopCompleted;
 
         public bool IsRunning { get; set; }
-        public Stopwatch GameTimer { get; set; }
-        public int Score { get; set; }
+        public bool IsComplete { get; set; }
+        public Stopwatch GameTimer { get; set; }        
         public PlayerCarModel PlayerCar { get; private set; }
         public List<MedianStripeModel> MedianStripes { get; set; }
         public List<AICarModel> AICars { get; set; }
+        public StatsModel Stats { get; set; }
         public bool ShowFog { get; set; }
-
         public int StageIndex { get; set; }
-        public int StageNumber => StageIndex + 1;
+        
         public string[] Stages = new[] { "rural", "desert", "alpine", "city", "coast" };
 
         public void StartStopGame()
@@ -69,10 +69,11 @@ namespace BlazorGame.Models
         private void ResetGame()
         {
             gameSpeed = 1;
+            IsComplete = false;
             StageIndex = 0;
-            Score = 0;
             PlayerCar = new PlayerCarModel();
             AICars = new List<AICarModel>();
+            Stats = new StatsModel();
             GenerateMedianStrip();
             ShowFog = false;
             GameTimer = new Stopwatch();
@@ -129,9 +130,10 @@ namespace BlazorGame.Models
                 if(GameTimer.Elapsed.TotalMinutes >= 5)
                 {
                     GameOver();
+                    IsComplete = true;
                 }
 
-                Score++;
+                Stats.Update(GameTimer.Elapsed, StageIndex + 1);
 
                 MainLoopCompleted?.Invoke(this, EventArgs.Empty);
                 await Task.Delay(100 / gameSpeed);

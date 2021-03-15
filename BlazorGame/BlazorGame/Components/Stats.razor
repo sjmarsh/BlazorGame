@@ -1,0 +1,15 @@
+﻿@using Models
+
+<div class="stats">
+    <div class="timer-label">TIME</div>
+    <div class="timer-value">@Model.TimePlayed.ToString(@"mm\:ss\:ff")</div>
+    <div class="score-label">SCORE</div>
+    <div class="score-value">@Model.Score</div>
+    <div class="level-label">STAGE</div>
+    <div class="level-value">@Model.StageNumber</div>
+</div>
+
+@code {
+    [Parameter]
+    public StatsModel Model { get; set; }
+}

@@ -1,0 +1,96 @@
+﻿@using Models;
+
+<div>
+    @if (DisplayMode == HighScoresDisplayMode.Button)
+    {
+        <div class="high-scores-button" @onclick="ShowHighScores">
+            <p>High Scores</p>
+        </div>
+    }
+    else if (DisplayMode == HighScoresDisplayMode.Show)
+    {
+        <div class="high-scores">
+            <h1>High Scores</h1>
+            <button class="high-scores-close-button" @onclick="HideHighScores">X</button>
+            <div hidden="@NewScoreEntryIsHidden()">
+                <p>Enter Your Name:</p>
+                <input type="text" @bind="_playerName" @onkeyup="HandleKeyUp" @onkeyup:stopPropagation/>
+            </div>
+            <table class="high-scores-table">
+                <thead>
+                    <tr>
+                        <th>Player</th>
+                        <th>Stage</th>
+                        <th>Score</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var score in _highScores)
+                    {
+                        <tr>
+                            <td>@score.PlayerName</td>
+                            <td>@score.Stage</td>
+                            <td>@score.Score</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+
+</div>
+
+@code {
+
+    [Parameter]
+    public HighScoresDisplayMode DisplayMode { get; set; }
+
+    [Parameter]
+    public int CurrentScore { get; set; }
+
+    [Parameter]
+    public int CurrentStage { get; set; }
+
+    private List<ScoreModel> _highScores;
+    private bool _hidePlayerNameEntry;
+    private string _playerName;
+
+    protected override void OnInitialized()
+    {
+        DisplayMode = HighScoresDisplayMode.Button;
+        _highScores = new List<ScoreModel>{
+            new ScoreModel { PlayerName = "Shannon", Stage = 2, Score = 12345 },
+            new ScoreModel { PlayerName = "Bob", Stage = 1, Score = 123 }
+        };
+    }
+
+    private void ShowHighScores()
+    {
+        _hidePlayerNameEntry = false;
+        DisplayMode = HighScoresDisplayMode.Show;
+    }
+
+    private void HideHighScores()
+    {
+        DisplayMode = HighScoresDisplayMode.Button;
+    }
+
+    private bool NewScoreEntryIsHidden()
+    {
+        var scores = _highScores.Select(h => h.Score);
+        return (CurrentScore < scores.Min() && scores.Count() > 10)
+            || scores.Count() > 10
+            || CurrentScore == 0
+            || _hidePlayerNameEntry;
+    }
+
+    private void HandleKeyUp(KeyboardEventArgs e)
+    {
+        if (e.Key == "Enter")
+        {
+            _highScores.Add(new ScoreModel { PlayerName = _playerName, Score = CurrentScore, Stage = CurrentStage, ScoreDate = DateTime.Now });
+            _hidePlayerNameEntry = true;
+            _playerName = string.Empty;
+        }
+    }
+}

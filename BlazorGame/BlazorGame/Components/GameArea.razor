@@ -6,25 +6,14 @@
 }
 else
 {
-    <div class="game-area" tabindex="0" @onclick="_game.StartStopGame" @onkeyup="HandleKeyUp">
+    <div class="game-area" tabindex="0"  @onkeyup="HandleKeyUp">
         <div class="fog" hidden="@_hideFog"></div>
-        <div class="dialog" hidden="@_hideStartDialog">
-            <h1>Click to Start</h1>
-        </div>
-        <div class="dialog" hidden="@_hideGameOverDialog">
-            <h1>Game Over</h1>
-            <p>Click to Play Again</p>
-        </div>
-        <div class="stats">
-            <div class="timer-label">TIME</div>
-            <div class="timer-value">@_game.GameTimer.Elapsed.ToString(@"mm\:ss\:ff")</div>
-            <div class="score-label">SCORE</div>
-            <div class="score-value">@_game.Score</div>
-            <div class="level-label">STAGE</div>
-            <div class="level-value">@_game.StageNumber</div>
-        </div>
-        <div class="sky @_skyCss">
-        </div>
+        <div class="message-area">
+            <Dialog DisplayMode="@GetDialogDisplayMode()" OnClickAction="_game.StartStopGame" />
+            <HighScores DisplayMode="@GetHighScoresDisplayMode()" CurrentScore ="_game.Stats.Score" CurrentStage="_game.Stats.StageNumber" />
+        </div>                
+        <Stats Model="@_game.Stats"/>
+        <div class="sky @_skyCss"></div>
         <div class="ground @_groundCss">
             <div class="road">
                 <div class="median-strip">
@@ -39,16 +28,14 @@ else
                 }
                 <PlayerCar Model="_game.PlayerCar" />
             </div>
-        </div></div>
-
+        </div>
+    </div>
 }
 
 @code {
 
     GameModel _game { get; set; }
 
-    private bool _hideStartDialog => _game.IsRunning || _game.PlayerCar.HasCollision;
-    private bool _hideGameOverDialog => !_game.PlayerCar.HasCollision;
     private string _skyCss => $"sky-{_game.Stages[_game.StageIndex]}";
     private string _groundCss => $"ground-{_game.Stages[_game.StageIndex]}";
     private bool _hideFog => !_game.ShowFog;
@@ -59,26 +46,52 @@ else
         _game.MainLoopCompleted += (o, e) => StateHasChanged();
     }
 
-    void HandleKeyUp(KeyboardEventArgs e)
+    private DialogDisplayMode GetDialogDisplayMode()
     {
-        if(e.Key == "ArrowLeft")
+        var mode = DialogDisplayMode.Hide;
+        if(!_game.IsRunning && !_game.IsComplete && !_game.PlayerCar.HasCollision)
         {
-            _game.MovePlayerCarLeft();
+            mode = DialogDisplayMode.Start;
+        }
+        else if (_game.PlayerCar.HasCollision)
+        {
+            mode = DialogDisplayMode.GameOver;
+        }
+        else if (_game.IsComplete)
+        {
+            mode = DialogDisplayMode.Complete;
         }
 
-        if(e.Key == "ArrowRight")
-        {
-            _game.MovePlayerCarRight();
-        }
+        return mode;
+    }
 
+    private HighScoresDisplayMode GetHighScoresDisplayMode()
+    {
+        return _game.IsRunning ? HighScoresDisplayMode.Hide : HighScoresDisplayMode.Button;
+    }
+
+    private void HandleKeyUp(KeyboardEventArgs e)
+    {
+        if(_game.IsRunning)
+        {
+            if (e.Key == "ArrowLeft")
+            {
+                _game.MovePlayerCarLeft();
+            }
+
+            if (e.Key == "ArrowRight")
+            {
+                _game.MovePlayerCarRight();
+            }
+
+            if (e.Key == "C" || e.Key == "c")
+            {
+                _game.ToggleCollisionsEnabled();
+            }
+        }
         if(e.Key == " ")
         {
             _game.StartStopGame();
-        }
-
-        if(e.Key == "C" || e.Key == "c")
-        {
-            _game.ToggleCollisionsEnabled();
         }
     }
 }

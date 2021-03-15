@@ -1,0 +1,50 @@
+﻿@using Models;
+
+<div class="dialog" hidden="@_hidden" @onclick="@InvokeOnClickAction">
+    <h1>@_heading</h1>
+    @if (!string.IsNullOrEmpty(_subHeading))
+    {
+        <p>@_subHeading</p>
+    }
+</div>
+
+@code {
+    private string _heading => GetHeading();
+    private string _subHeading => GetSubHeading();
+    private bool _hidden => DisplayMode == DialogDisplayMode.Hide;
+
+    [Parameter]
+    public DialogDisplayMode DisplayMode { get; set; }
+
+    [Parameter]
+    public Action OnClickAction { get; set; }
+
+    private string GetHeading()
+    {
+        var headings = new Dictionary<DialogDisplayMode, string>() {
+                { DialogDisplayMode.Start, "Click to Start"},
+                { DialogDisplayMode.GameOver, "Game Over!"},
+                { DialogDisplayMode.Complete, "You Win!" }
+            };
+
+        headings.TryGetValue(DisplayMode, out string heading);
+        return heading;
+    }
+
+    private string GetSubHeading()
+    {
+        if(DisplayMode == DialogDisplayMode.GameOver || DisplayMode == DialogDisplayMode.Complete )
+        {
+            return "Click to Play Again";
+        }
+        return string.Empty;
+    }
+
+    private void InvokeOnClickAction()
+    {
+        if(OnClickAction != null)
+        {
+            OnClickAction.Invoke();
+        }
+    }
+}
