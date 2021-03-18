@@ -1,6 +1,7 @@
 ﻿@using Models;
 
 @inject Blazored.LocalStorage.ISyncLocalStorageService localStorage;
+@inject IJSRuntime jsRuntime;
 
 <div>
     @if (DisplayMode == HighScoresDisplayMode.Button)
@@ -11,14 +12,12 @@
     }
     else if (DisplayMode == HighScoresDisplayMode.Show)
     {
-
         <div class="high-scores">
             <h1>High Scores</h1>
             <button class="high-scores-close-button" @onclick="HideHighScores">X</button>
             <div hidden="@NewScoreEntryIsHidden()">
                 <p>Enter Your Name:</p>
                 <input id="playerNameInput" type="text" @bind="_playerName" @onkeyup="HandleKeyUp" @onkeyup:stopPropagation />
-
             </div>
             <table class="high-scores-table">
                 <thead>
@@ -61,16 +60,20 @@
     private bool _hidePlayerNameEntry;
     private string _playerName;
 
+    IJSObjectReference module;
+
     protected override void OnInitialized()
     {
         DisplayMode = HighScoresDisplayMode.Button;
         _highScores = localStorage.GetItem<List<ScoreModel>>("highscores") ?? new List<ScoreModel>();
     }
 
-    private void ShowHighScores()
+    private async void ShowHighScores()
     {
         _hidePlayerNameEntry = false;
         DisplayMode = HighScoresDisplayMode.Show;
+        module = await jsRuntime.InvokeAsync<IJSObjectReference>("import", "./js/helpers.js");
+        await module.InvokeAsync<string>("setFocus", "playerNameInput");
     }
 
     private void HideHighScores()
@@ -96,11 +99,11 @@
 
     private void AddNewHighScore()
     {
-        _highScores.Add(new ScoreModel { PlayerName = _playerName, Score = CurrentScore, Stage = CurrentStage, ScoreDate = DateTime.Now });
-        if (_highScores.Count > MaxHighScoreCount)
+        if (_highScores.Count >= MaxHighScoreCount)
         {
             _highScores.RemoveAt(MaxHighScoreCount - 1);
         }
+        _highScores.Add(new ScoreModel { PlayerName = _playerName, Score = CurrentScore, Stage = CurrentStage, ScoreDate = DateTime.Now });
         _highScores = _highScores.OrderByDescending(h => h.Score).ToList();
         _hidePlayerNameEntry = true;
         _playerName = string.Empty;
