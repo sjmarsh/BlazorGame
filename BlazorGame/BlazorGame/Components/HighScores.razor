@@ -1,5 +1,7 @@
 ﻿@using Models;
 
+@inject Blazored.LocalStorage.ISyncLocalStorageService localStorage;
+
 <div>
     @if (DisplayMode == HighScoresDisplayMode.Button)
     {
@@ -9,12 +11,14 @@
     }
     else if (DisplayMode == HighScoresDisplayMode.Show)
     {
+
         <div class="high-scores">
             <h1>High Scores</h1>
             <button class="high-scores-close-button" @onclick="HideHighScores">X</button>
             <div hidden="@NewScoreEntryIsHidden()">
                 <p>Enter Your Name:</p>
-                <input type="text" @bind="_playerName" @onkeyup="HandleKeyUp" @onkeyup:stopPropagation/>
+                <input id="playerNameInput" type="text" @bind="_playerName" @onkeyup="HandleKeyUp" @onkeyup:stopPropagation />
+
             </div>
             <table class="high-scores-table">
                 <thead>
@@ -51,6 +55,8 @@
     [Parameter]
     public int CurrentStage { get; set; }
 
+    private const int MaxHighScoreCount = 10;
+
     private List<ScoreModel> _highScores;
     private bool _hidePlayerNameEntry;
     private string _playerName;
@@ -58,10 +64,7 @@
     protected override void OnInitialized()
     {
         DisplayMode = HighScoresDisplayMode.Button;
-        _highScores = new List<ScoreModel>{
-            new ScoreModel { PlayerName = "Shannon", Stage = 2, Score = 12345 },
-            new ScoreModel { PlayerName = "Bob", Stage = 1, Score = 123 }
-        };
+        _highScores = localStorage.GetItem<List<ScoreModel>>("highscores") ?? new List<ScoreModel>();
     }
 
     private void ShowHighScores()
@@ -78,8 +81,7 @@
     private bool NewScoreEntryIsHidden()
     {
         var scores = _highScores.Select(h => h.Score);
-        return (CurrentScore < scores.Min() && scores.Count() > 10)
-            || scores.Count() > 10
+        return scores.Any() && CurrentScore <= scores.Min() && scores.Count() > MaxHighScoreCount
             || CurrentScore == 0
             || _hidePlayerNameEntry;
     }
@@ -88,9 +90,20 @@
     {
         if (e.Key == "Enter")
         {
-            _highScores.Add(new ScoreModel { PlayerName = _playerName, Score = CurrentScore, Stage = CurrentStage, ScoreDate = DateTime.Now });
-            _hidePlayerNameEntry = true;
-            _playerName = string.Empty;
+            AddNewHighScore();
         }
+    }
+
+    private void AddNewHighScore()
+    {
+        _highScores.Add(new ScoreModel { PlayerName = _playerName, Score = CurrentScore, Stage = CurrentStage, ScoreDate = DateTime.Now });
+        if (_highScores.Count > MaxHighScoreCount)
+        {
+            _highScores.RemoveAt(MaxHighScoreCount - 1);
+        }
+        _highScores = _highScores.OrderByDescending(h => h.Score).ToList();
+        _hidePlayerNameEntry = true;
+        _playerName = string.Empty;
+        localStorage.SetItem<List<ScoreModel>>("highscores", _highScores);
     }
 }
