@@ -96,15 +96,15 @@ namespace BlazorGame.Models
 
             while (IsRunning)
             {
-                AnimateMedianStrip();
-                AnimateAICars();
-
                 if (HasCollision())
                 {
                     GameOver();
                 }
 
-                if(GameTimer.Elapsed.TotalMinutes >= 1 && StageIndex < 1)
+                AnimateMedianStrip();
+                AnimateAICars();
+
+                if (GameTimer.Elapsed.TotalMinutes >= 1 && StageIndex < 1)
                 {
                     StageIndex = 1;
                     gameSpeed = 2;

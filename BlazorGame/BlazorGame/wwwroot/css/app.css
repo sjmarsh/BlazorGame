@@ -193,7 +193,7 @@ h1 {
     position: fixed;
     width: 500px;
     left: 80px;
-    color: black;
+    color: #b10b0b;
     display: grid;
     grid-gap: 5px;
     font-size: x-large;
@@ -234,7 +234,8 @@ h1 {
 
 .high-scores-button {
     text-align: center;
-    color: #FDF500;
+    color: #fcdd03;
+    text-shadow: 3px 3px 0px #fc4e03;
     font-weight: bold;
     font-size: x-large;
     cursor: pointer;
@@ -247,7 +248,7 @@ h1 {
     width: 80%;
     margin-left: -40%;
     text-align: center;
-    color: #FDF500;
+    color: #fdf500;
     background-color: rgba(0, 0, 0, 0.8);
     z-index: 6;
 }
@@ -256,6 +257,8 @@ h1 {
     width: 100%;
     text-align: left;
     padding: 10px;
+    color: #fdf500;
+    text-shadow: none;
 }
 
 .high-scores-close-button {
@@ -263,9 +266,9 @@ h1 {
     top: 5px;
     right: 5px;
     background: transparent;
-    color: #FDF500;
+    color: #fdf500;
     border-style: solid;
-    border-color: #FDF500;
+    border-color: #fdf500;
     cursor: pointer;
 }
 

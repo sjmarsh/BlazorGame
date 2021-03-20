@@ -17,7 +17,7 @@
             <button class="high-scores-close-button" @onclick="HideHighScores">X</button>
             <div hidden="@NewScoreEntryIsHidden()">
                 <p>Enter Your Name:</p>
-                <input id="playerNameInput" type="text" @bind="_playerName" @onkeyup="HandleKeyUp" @onkeyup:stopPropagation />
+                <input id="playerNameInput" type="text" maxlength="15" @bind="_playerName" @onkeyup="HandleKeyUp" @onkeyup:stopPropagation />
             </div>
             <table class="high-scores-table">
                 <thead>
@@ -99,14 +99,17 @@
 
     private void AddNewHighScore()
     {
-        if (_highScores.Count >= MaxHighScoreCount)
+        if(!string.IsNullOrWhiteSpace(_playerName))
         {
-            _highScores.RemoveAt(MaxHighScoreCount - 1);
+            if (_highScores.Count >= MaxHighScoreCount)
+            {
+                _highScores.RemoveAt(MaxHighScoreCount - 1);
+            }
+            _highScores.Add(new ScoreModel { PlayerName = _playerName, Score = CurrentScore, Stage = CurrentStage, ScoreDate = DateTime.Now });
+            _highScores = _highScores.OrderByDescending(h => h.Score).ToList();
+            _hidePlayerNameEntry = true;
+            _playerName = string.Empty;
+            localStorage.SetItem<List<ScoreModel>>("highscores", _highScores);
         }
-        _highScores.Add(new ScoreModel { PlayerName = _playerName, Score = CurrentScore, Stage = CurrentStage, ScoreDate = DateTime.Now });
-        _highScores = _highScores.OrderByDescending(h => h.Score).ToList();
-        _hidePlayerNameEntry = true;
-        _playerName = string.Empty;
-        localStorage.SetItem<List<ScoreModel>>("highscores", _highScores);
     }
 }
