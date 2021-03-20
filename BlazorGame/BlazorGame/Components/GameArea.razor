@@ -16,12 +16,7 @@ else
         <div class="sky @_skyCss"></div>
         <div class="ground @_groundCss">
             <div class="road">
-                <div class="median-strip">
-                    @foreach (var medianStripe in _game.MedianStripes)
-                    {
-                        <MedianStripes Model="medianStripe" />
-                    }
-                </div>
+                <MedianStrip Manager="_game.MedianStripManager"></MedianStrip>
                 @foreach (var aiCar in _game.AICars)
                 {
                     <AICar Model="aiCar" />

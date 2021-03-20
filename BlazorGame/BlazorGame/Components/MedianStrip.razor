@@ -1,0 +1,22 @@
+﻿@using Models;
+
+<div class="median-strip">
+    @foreach (var medianStripe in Manager.MedianStripes)
+    {
+        <div class="@GetId(medianStripe)" style="@GetStyle(medianStripe)" />
+    }
+</div>
+
+@code {
+    [Parameter] public MedianStripManager Manager { get; set; }
+
+    private string GetId(MedianStripeModel model)
+    {
+        return $"id-{model.Id}";
+    }
+
+    private string GetStyle(MedianStripeModel model)
+    {
+        return $"top: {model.Top}px; height: {model.Height}px; width: 5px; background-color: white; position:absolute;";
+    }
+}

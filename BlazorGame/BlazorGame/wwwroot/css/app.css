@@ -107,15 +107,6 @@ h1 {
     z-index: -2;
 }
 
-.median-strip {
-    width: 5px;
-    left: 50%;
-    top: -20px;
-    height: 410px;
-    position: absolute;
-    z-index: -1;
-}
-
 .player-car {
     background-position: center;
     background-repeat: no-repeat;

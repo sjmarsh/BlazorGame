@@ -8,8 +8,6 @@ namespace BlazorGame.Models
 {
     public class GameModel
     {
-        private int medianCounter;
-        private int stripeCounter;
         private bool isCollisionsEnabled;
 
         public GameModel()
@@ -17,21 +15,21 @@ namespace BlazorGame.Models
             StageManager = new StageManager();
             GameTimer = new Stopwatch();
             Stats = new StatsModel();
-            GenerateMedianStrip();
+            MedianStripManager = new MedianStripManager();
             ResetGame();
         }
 
         public EventHandler MainLoopCompleted;
 
-        public bool IsRunning { get; set; }
-        public bool IsComplete { get; set; }
-        public Stopwatch GameTimer { get; set; }        
+        public bool IsRunning { get; private set; }
+        public bool IsComplete { get; private set; }
+        public Stopwatch GameTimer { get; private set; }
+        public StatsModel Stats { get; private set; }
+        public StageManager StageManager { get; private set; }
+        public MedianStripManager MedianStripManager { get; private set; }
         public PlayerCarModel PlayerCar { get; private set; }
-        public List<MedianStripeModel> MedianStripes { get; set; }
-        public List<AICarModel> AICars { get; set; }
-        public StageManager StageManager { get; set; }
-        public StatsModel Stats { get; set; }
-
+        public List<AICarModel> AICars { get; private set; }
+        
         public void StartStopGame()
         {
             if (!IsRunning)
@@ -69,13 +67,14 @@ namespace BlazorGame.Models
         private void ResetGame()
         {
             IsComplete = false;
-            StageManager.Reset();
-            PlayerCar = new PlayerCarModel();
-            AICars = new List<AICarModel>();
-            Stats.Reset();
             GameTimer.Reset();
             GameTimer.Start();
-            isCollisionsEnabled = true;
+            Stats.Reset();
+            StageManager.Reset();
+            MedianStripManager.Reset();
+            PlayerCar = new PlayerCarModel();
+            AICars = new List<AICarModel>();           
+            isCollisionsEnabled = true;          
         }
 
         private void GameOver()
@@ -87,9 +86,7 @@ namespace BlazorGame.Models
         private async void MainLoop()
         {
             IsRunning = true;
-            medianCounter = 0;
-            stripeCounter = 0;
-
+            
             while (IsRunning)
             {
                 if (HasCollision())
@@ -97,7 +94,7 @@ namespace BlazorGame.Models
                     GameOver();
                 }
 
-                AnimateMedianStrip();
+                MedianStripManager.Animate();
                 AnimateAICars();
 
                 StageManager.IncrementStageIfTimeHasElapsed(GameTimer.Elapsed.TotalMinutes);
@@ -115,39 +112,6 @@ namespace BlazorGame.Models
             }
         }
        
-        private void GenerateMedianStrip()
-        {
-            MedianStripes = new List<MedianStripeModel>();
-
-            for (int i = 0; i < 80; i++)
-            {
-                AnimateMedianStrip();
-            }
-        }
-                
-        private void AnimateMedianStrip()
-        {
-            if (!MedianStripes.Any() || medianCounter > 2)
-            {
-                stripeCounter++;
-                MedianStripes.Add(new MedianStripeModel { Id = stripeCounter });
-                medianCounter = 0;
-            }
-
-            foreach (var stripe in MedianStripes)
-            {
-                stripe.Move();
-            }
-
-            var bottomStripe = MedianStripes.FirstOrDefault(m => m.Top > 330);
-            if (bottomStripe != null)
-            {
-                MedianStripes.Remove(bottomStripe);
-            }
-
-            medianCounter++;
-        }
-
         private void AnimateAICars()
         {
             if (!AICars.Any() || !AICars.Any(a => a.Top < 120))
