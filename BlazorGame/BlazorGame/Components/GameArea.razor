@@ -17,10 +17,7 @@ else
         <div class="ground @_groundCss">
             <div class="road">
                 <MedianStrip Manager="_game.MedianStripManager"></MedianStrip>
-                @foreach (var aiCar in _game.AICars)
-                {
-                    <AICar Model="aiCar" />
-                }
+                <AICars Manager="_game.AICarManager"></AICars>
                 <PlayerCar Model="_game.PlayerCar" />
             </div>
         </div>

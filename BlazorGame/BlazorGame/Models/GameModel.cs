@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using System.Diagnostics;
 
@@ -16,6 +14,7 @@ namespace BlazorGame.Models
             GameTimer = new Stopwatch();
             Stats = new StatsModel();
             MedianStripManager = new MedianStripManager();
+            AICarManager = new AICarManager();
             ResetGame();
         }
 
@@ -28,8 +27,8 @@ namespace BlazorGame.Models
         public StageManager StageManager { get; private set; }
         public MedianStripManager MedianStripManager { get; private set; }
         public PlayerCarModel PlayerCar { get; private set; }
-        public List<AICarModel> AICars { get; private set; }
-        
+        public AICarManager AICarManager { get; private set; }
+
         public void StartStopGame()
         {
             if (!IsRunning)
@@ -73,7 +72,7 @@ namespace BlazorGame.Models
             StageManager.Reset();
             MedianStripManager.Reset();
             PlayerCar = new PlayerCarModel();
-            AICars = new List<AICarModel>();           
+            AICarManager.Reset();
             isCollisionsEnabled = true;          
         }
 
@@ -95,7 +94,7 @@ namespace BlazorGame.Models
                 }
 
                 MedianStripManager.Animate();
-                AnimateAICars();
+                AICarManager.AnimateCars();
 
                 StageManager.IncrementStageIfTimeHasElapsed(GameTimer.Elapsed.TotalMinutes);
 
@@ -112,25 +111,6 @@ namespace BlazorGame.Models
             }
         }
        
-        private void AnimateAICars()
-        {
-            if (!AICars.Any() || !AICars.Any(a => a.Top < 120))
-            {
-                AICars.Add(new AICarModel());
-            }
-
-            foreach (var aiCar in AICars)
-            {
-                aiCar.Move();
-            }
-
-            var bottomCar = AICars.FirstOrDefault(a => a.Top > 290);
-            if(bottomCar != null)
-            {
-                AICars.Remove(bottomCar);
-            }
-        }
-
         private bool HasCollision()
         {
             if(!isCollisionsEnabled)
@@ -138,21 +118,18 @@ namespace BlazorGame.Models
                 return false;
             }
 
-            var carCollided = false;
-            var carNearPlayer = AICars.FirstOrDefault(a => a.Top == PlayerCar.Top || (a.Bottom >= PlayerCar.Top && a.Top < PlayerCar.Top));
-            if (carNearPlayer != null)
-            {
-                carCollided = (carNearPlayer.RightSide >= PlayerCar.LeftSide && carNearPlayer.LeftSide <= PlayerCar.LeftSide)
-                    || (carNearPlayer.LeftSide <= PlayerCar.RightSide && carNearPlayer.RightSide >= PlayerCar.RightSide);
-            }
+            var hasCarCollided = false;
 
-            if (carCollided)
+            var aiCarCollidedWithWithPlayer = AICarManager.GetCarCollidedWithPlayer(PlayerCar);
+
+            if (aiCarCollidedWithWithPlayer != null)
             {
                 PlayerCar.Crash();
-                carNearPlayer.Crash();
+                aiCarCollidedWithWithPlayer.Crash();
+                hasCarCollided = true;
             }
 
-            return carCollided;
+            return hasCarCollided;
         }
     }
 }

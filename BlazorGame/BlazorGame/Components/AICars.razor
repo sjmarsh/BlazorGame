@@ -1,0 +1,27 @@
+﻿@using Models;
+
+@foreach (var aiCar in Manager.Cars)
+{
+    <div class="ai-car @GetColor(aiCar)-car @GetCss(aiCar)" style="@GetStyles(aiCar)" />
+}
+
+
+@code {
+    [Parameter]
+    public AICarManager Manager { get; set; }
+
+    private string GetColor(AICarModel model)
+    {
+        return model.Color.ToLower();
+    }
+
+    private string GetCss(AICarModel model)
+    {
+        return model.HasCollision ? "car-shake" : string.Empty;
+    }
+
+    private string GetStyles(AICarModel model)
+    {
+        return $"top: {model.Top}px; left: {model.LeftSide}px; height: {model.Height}px; width: {model.Width}px";
+    }
+}
