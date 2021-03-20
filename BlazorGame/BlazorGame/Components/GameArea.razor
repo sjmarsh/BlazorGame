@@ -36,9 +36,9 @@ else
 
     GameModel _game { get; set; }
 
-    private string _skyCss => $"sky-{_game.Stages[_game.StageIndex]}";
-    private string _groundCss => $"ground-{_game.Stages[_game.StageIndex]}";
-    private bool _hideFog => !_game.ShowFog;
+    private string _skyCss => $"sky-{_game.StageManager.CurrentStage.Name}";
+    private string _groundCss => $"ground-{_game.StageManager.CurrentStage.Name}";
+    private bool _hideFog => !_game.StageManager.CurrentStage.ShowFog;
 
     protected override void OnInitialized()
     {

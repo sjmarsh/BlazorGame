@@ -1,0 +1,9 @@
+﻿.dialog {
+    text-align: center;
+    background-color: transparent;
+    color: #fcdd03;
+    text-shadow: 3px 3px 0px #fc4e03;
+    font-size: x-large;
+    font-weight: bold;
+    cursor: pointer;
+}

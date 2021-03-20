@@ -8,13 +8,16 @@ namespace BlazorGame.Models
 {
     public class GameModel
     {
-        private int gameSpeed;
         private int medianCounter;
         private int stripeCounter;
         private bool isCollisionsEnabled;
 
         public GameModel()
         {
+            StageManager = new StageManager();
+            GameTimer = new Stopwatch();
+            Stats = new StatsModel();
+            GenerateMedianStrip();
             ResetGame();
         }
 
@@ -26,11 +29,8 @@ namespace BlazorGame.Models
         public PlayerCarModel PlayerCar { get; private set; }
         public List<MedianStripeModel> MedianStripes { get; set; }
         public List<AICarModel> AICars { get; set; }
+        public StageManager StageManager { get; set; }
         public StatsModel Stats { get; set; }
-        public bool ShowFog { get; set; }
-        public int StageIndex { get; set; }
-        
-        public string[] Stages = new[] { "rural", "desert", "alpine", "city", "coast" };
 
         public void StartStopGame()
         {
@@ -68,15 +68,11 @@ namespace BlazorGame.Models
 
         private void ResetGame()
         {
-            gameSpeed = 1;
             IsComplete = false;
-            StageIndex = 0;
+            StageManager.Reset();
             PlayerCar = new PlayerCarModel();
             AICars = new List<AICarModel>();
-            Stats = new StatsModel();
-            GenerateMedianStrip();
-            ShowFog = false;
-            GameTimer = new Stopwatch();
+            Stats.Reset();
             GameTimer.Reset();
             GameTimer.Start();
             isCollisionsEnabled = true;
@@ -104,39 +100,18 @@ namespace BlazorGame.Models
                 AnimateMedianStrip();
                 AnimateAICars();
 
-                if (GameTimer.Elapsed.TotalMinutes >= 1 && StageIndex < 1)
-                {
-                    StageIndex = 1;
-                    gameSpeed = 2;
-                }
-                if (GameTimer.Elapsed.TotalMinutes >= 2 && StageIndex < 2)
-                {
-                    StageIndex = 2;
-                    gameSpeed = 2;
-                    ShowFog = true;
-                }
-                if (GameTimer.Elapsed.TotalMinutes >= 3 && StageIndex < 3)
-                {
-                    StageIndex = 3;
-                    gameSpeed = 3;
-                    ShowFog = false;
-                }
-                if (GameTimer.Elapsed.TotalMinutes >= 4 && StageIndex < 4)
-                {
-                    StageIndex = 4;
-                    gameSpeed = 4;
-                    ShowFog = false;
-                }
-                if(GameTimer.Elapsed.TotalMinutes >= 5)
+                StageManager.IncrementStageIfTimeHasElapsed(GameTimer.Elapsed.TotalMinutes);
+
+                if(StageManager.AllStagesCompleted)
                 {
                     GameOver();
                     IsComplete = true;
                 }
 
-                Stats.Update(GameTimer.Elapsed, StageIndex + 1);
+                Stats.Update(GameTimer.Elapsed, StageManager.CurrentStage.Number);
 
                 MainLoopCompleted?.Invoke(this, EventArgs.Empty);
-                await Task.Delay(100 / gameSpeed);
+                await Task.Delay(100 / StageManager.CurrentStage.Speed);
             }
         }
        

@@ -6,14 +6,19 @@ namespace BlazorGame.Models
     {
         public StatsModel()
         {
-            TimePlayed = new TimeSpan(0,0,0);
-            StageNumber = 1;
-            Score = 0;
+            Reset();
         }
 
         public TimeSpan TimePlayed { get; set; }
         public int StageNumber { get; set; }
         public int Score { get; set; }
+
+        public void Reset()
+        {
+            TimePlayed = new TimeSpan(0, 0, 0);
+            StageNumber = 1;
+            Score = 0;
+        }
 
         public void Update(TimeSpan timePlayed, int stageNumber)
         {

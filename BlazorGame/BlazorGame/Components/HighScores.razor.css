@@ -1,0 +1,43 @@
+﻿.high-scores-button {
+    text-align: center;
+    color: #fcdd03;
+    text-shadow: 3px 3px 0px #fc4e03;
+    font-weight: bold;
+    font-size: x-large;
+    cursor: pointer;
+}
+
+.high-scores {
+    position: absolute;
+    top: 0%;
+    left: 50%;
+    width: 80%;
+    margin-left: -40%;
+    text-align: center;
+    color: #fdf500;
+    background-color: rgba(0, 0, 0, 0.8);
+    z-index: 6;
+}
+
+.high-scores-table {
+    width: 100%;
+    text-align: left;
+    padding: 10px;
+    color: #fdf500;
+    text-shadow: none;
+}
+
+.high-scores-close-button {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background: transparent;
+    color: #fdf500;
+    border-style: solid;
+    border-color: #fdf500;
+    cursor: pointer;
+}
+
+    .high-scores-close-button:hover {
+        background: rgba(255, 247, 0, 0.5);
+    }
