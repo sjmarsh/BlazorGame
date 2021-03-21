@@ -48,23 +48,23 @@ h1 {
 }
 
 .sky-rural {
-    background-image: url(../images/game-sky-rural.png);
+    background-image: url(../images/sky/sky-rural.png);
 }
 
 .sky-desert {
-    background-image: url(../images/game-sky-desert.png);
+    background-image: url(../images/sky/sky-desert.png);
 }
 
 .sky-alpine {
-    background-image: url(../images/game-sky-alpine.png);
+    background-image: url(../images/sky/sky-alpine.png);
 }
 
 .sky-city {
-    background-image: url(../images/game-sky-city.png);
+    background-image: url(../images/sky/sky-city.png);
 }
 
 .sky-coast {
-    background-image: url(../images/game-sky-coast.png);
+    background-image: url(../images/sky/sky-coast.png);
 }
 
 .ground {
@@ -77,23 +77,23 @@ h1 {
 }
 
 .ground-rural {
-    background-image: url(../images/game-ground-rural.png);
+    background-image: url(../images/ground/ground-rural.png);
 }
 
 .ground-desert {
-    background-image: url(../images/game-ground-desert.png);
+    background-image: url(../images/ground/ground-desert.png);
 }
 
 .ground-alpine {
-    background-image: url(../images/game-ground-alpine.png);
+    background-image: url(../images/ground/ground-alpine.png);
 }
 
 .ground-city {
-    background-image: url(../images/game-ground-city.png);
+    background-image: url(../images/ground/ground-city.png);
 }
 
 .ground-coast {
-    background-image: url(../images/game-ground-coast.png);
+    background-image: url(../images/ground/ground-coast.png);
 }
 
 .road {
@@ -126,27 +126,27 @@ h1 {
 }
 
 .red-car {
-    background-image: url(../images/red-car.png);
+    background-image: url(../images/cars/red-car.png);
 }
 
 .green-car {
-    background-image: url(../images/green-car.png);
+    background-image: url(../images/cars/green-car.png);
 }
 
 .yellow-car {
-    background-image: url(../images/yellow-car.png);
+    background-image: url(../images/cars/yellow-car.png);
 }
 
 .blue-car {
-    background-image: url(../images/blue-car.png);
+    background-image: url(../images/cars/blue-car.png);
 }
 
 .purple-car {
-    background-image: url(../images/purple-car.png);
+    background-image: url(../images/cars/purple-car.png);
 }
 
 .orange-car {
-    background-image: url(../images/orange-car.png);
+    background-image: url(../images/cars/orange-car.png);
 }
 
 .car-shake {
