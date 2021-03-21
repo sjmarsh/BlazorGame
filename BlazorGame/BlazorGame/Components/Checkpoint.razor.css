@@ -1,0 +1,14 @@
+﻿.checkpoint {
+    color: red;
+    font-size: xx-large;
+    font-weight: bolder;
+    text-align: center;
+    animation: blink 1s linear infinite;
+}
+
+@keyframes blink {
+
+    50% {
+        opacity: 0%;
+    }
+}

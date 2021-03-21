@@ -96,8 +96,9 @@ namespace BlazorGame.Models
 
                 MedianStripManager.Animate();
                 AICarManager.Animate();
-                StageManager.IncrementIfStageTimeHasElapsed(GameTimer.Elapsed.TotalMinutes);
-
+                StageManager.ShowCheckpointIfRequired(GameTimer.Elapsed.TotalSeconds);
+                StageManager.IncrementStageIfRequired(GameTimer.Elapsed.TotalMinutes);
+                
                 if(StageManager.AllStagesCompleted)
                 {
                     GameOver(true);

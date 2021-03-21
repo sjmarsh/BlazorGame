@@ -18,18 +18,19 @@ namespace BlazorGame.Models
 
         public bool AllStagesCompleted { get; private set; }
 
+        public bool ShowCheckpoint { get; private set; }
+
         public void Reset()
         {
             AllStagesCompleted = false;
             currentStageNumber = 1;
         }
 
-        public void IncrementIfStageTimeHasElapsed(double gameTimeElapsedMinutes)
+        public void IncrementStageIfRequired(double gameTimeElapsedMinutes)
         {
-            int timeToIncrementStage = stages.Where(s => s.Number <= currentStageNumber).Sum(s => s.DurationMinutes);
-            if (gameTimeElapsedMinutes >= timeToIncrementStage)
+            if (gameTimeElapsedMinutes >= GetEndOfCurrentStageTime())
             {
-                if(currentStageNumber < stages.Count)
+                if (currentStageNumber < stages.Count)
                 {
                     currentStageNumber++;
                 }
@@ -38,6 +39,19 @@ namespace BlazorGame.Models
                     AllStagesCompleted = true;
                 }
             }
+        }
+        
+        public void ShowCheckpointIfRequired(double gameTimeElapsedSeconds)
+        {
+            const int CheckPointDuration = 5;
+            var endOfStageSeconds = GetEndOfCurrentStageTime() * 60;
+             ShowCheckpoint = (gameTimeElapsedSeconds >= (endOfStageSeconds - CheckPointDuration)) 
+                                && gameTimeElapsedSeconds < endOfStageSeconds;
+        }
+
+        private int GetEndOfCurrentStageTime()
+        {
+            return stages.Where(s => s.Number <= currentStageNumber).Sum(s => s.DurationMinutes);
         }
 
         private void InitializeStages()

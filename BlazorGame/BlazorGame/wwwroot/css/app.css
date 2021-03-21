@@ -207,6 +207,7 @@ h1 {
         transform: translate(1px, -2px) rotate(-1deg);
     }
 }
+
 /*Built-in Blazor Error Styles*/
 #blazor-error-ui {
     background: lightyellow;
