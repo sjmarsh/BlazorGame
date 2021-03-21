@@ -24,7 +24,7 @@ namespace BlazorGame.Models
             currentStageNumber = 1;
         }
 
-        public void IncrementStageIfTimeHasElapsed(double gameTimeElapsedMinutes)
+        public void IncrementIfStageTimeHasElapsed(double gameTimeElapsedMinutes)
         {
             int timeToIncrementStage = stages.Where(s => s.Number <= currentStageNumber).Sum(s => s.DurationMinutes);
             if (gameTimeElapsedMinutes >= timeToIncrementStage)

@@ -38,7 +38,7 @@ namespace BlazorGame.Models
             }
             else
             {
-                GameOver();
+                GameOver(false);
             }
         }
 
@@ -76,10 +76,11 @@ namespace BlazorGame.Models
             isCollisionsEnabled = true;          
         }
 
-        private void GameOver()
+        private void GameOver(bool isComplete)
         {
             IsRunning = false;
             GameTimer.Stop();
+            IsComplete = isComplete;
         }
               
         private async void MainLoop()
@@ -90,18 +91,16 @@ namespace BlazorGame.Models
             {
                 if (HasCollision())
                 {
-                    GameOver();
+                    GameOver(false);
                 }
 
                 MedianStripManager.Animate();
-                AICarManager.AnimateCars();
-
-                StageManager.IncrementStageIfTimeHasElapsed(GameTimer.Elapsed.TotalMinutes);
+                AICarManager.Animate();
+                StageManager.IncrementIfStageTimeHasElapsed(GameTimer.Elapsed.TotalMinutes);
 
                 if(StageManager.AllStagesCompleted)
                 {
-                    GameOver();
-                    IsComplete = true;
+                    GameOver(true);
                 }
 
                 Stats.Update(GameTimer.Elapsed, StageManager.CurrentStage.Number);

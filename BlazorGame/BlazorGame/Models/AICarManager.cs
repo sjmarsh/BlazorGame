@@ -5,7 +5,7 @@ namespace BlazorGame.Models
 {
     public class AICarManager
     {
-        private const int TopOfRoad = 120;
+        private const int NewCarSpawnHeight = 120;
         private const int BottomOfRoad = 290;
 
         public AICarManager()
@@ -20,9 +20,9 @@ namespace BlazorGame.Models
             Cars.Clear();
         }
 
-        public void AnimateCars()
+        public void Animate()
         {
-            if (!Cars.Any() || !Cars.Any(a => a.Top < TopOfRoad))
+            if (!Cars.Any() || !Cars.Any(a => a.Top < NewCarSpawnHeight))
             {
                 Cars.Add(new AICarModel());
             }

@@ -17,7 +17,7 @@
             <button class="high-scores-close-button" @onclick="HideHighScores">X</button>
             <div hidden="@NewScoreEntryIsHidden()">
                 <p>Enter Your Name:</p>
-                <input id="playerNameInput" type="text" maxlength="15" @bind="_playerName" @onkeyup="HandleKeyUp" @onkeyup:stopPropagation />
+                <input id="playerNameInput" type="text" maxlength="15" @bind="playerName" @onkeyup="HandleKeyUp" @onkeyup:stopPropagation />
             </div>
             <table class="high-scores-table">
                 <thead>
@@ -28,7 +28,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var score in _highScores)
+                    @foreach (var score in highScores)
                     {
                         <tr>
                             <td>@score.PlayerName</td>
@@ -56,21 +56,21 @@
 
     private const int MaxHighScoreCount = 10;
 
-    private List<ScoreModel> _highScores;
-    private bool _hidePlayerNameEntry;
-    private string _playerName;
+    private List<ScoreModel> highScores;
+    private bool hidePlayerNameEntry;
+    private string playerName;
 
     IJSObjectReference module;
 
     protected override void OnInitialized()
     {
         DisplayMode = HighScoresDisplayMode.Button;
-        _highScores = localStorage.GetItem<List<ScoreModel>>("highscores") ?? new List<ScoreModel>();
+        highScores = localStorage.GetItem<List<ScoreModel>>("highscores") ?? new List<ScoreModel>();
     }
 
     private async void ShowHighScores()
     {
-        _hidePlayerNameEntry = false;
+        hidePlayerNameEntry = false;
         DisplayMode = HighScoresDisplayMode.Show;
         module = await jsRuntime.InvokeAsync<IJSObjectReference>("import", "./js/helpers.js");
         await module.InvokeAsync<string>("setFocus", "playerNameInput");
@@ -83,10 +83,10 @@
 
     private bool NewScoreEntryIsHidden()
     {
-        var scores = _highScores.Select(h => h.Score);
+        var scores = highScores.Select(h => h.Score);
         return scores.Any() && CurrentScore <= scores.Min() && scores.Count() > MaxHighScoreCount
             || CurrentScore == 0
-            || _hidePlayerNameEntry;
+            || hidePlayerNameEntry;
     }
 
     private void HandleKeyUp(KeyboardEventArgs e)
@@ -99,17 +99,17 @@
 
     private void AddNewHighScore()
     {
-        if(!string.IsNullOrWhiteSpace(_playerName))
+        if(!string.IsNullOrWhiteSpace(playerName))
         {
-            if (_highScores.Count >= MaxHighScoreCount)
+            if (highScores.Count >= MaxHighScoreCount)
             {
-                _highScores.RemoveAt(MaxHighScoreCount - 1);
+                highScores.RemoveAt(MaxHighScoreCount - 1);
             }
-            _highScores.Add(new ScoreModel { PlayerName = _playerName, Score = CurrentScore, Stage = CurrentStage, ScoreDate = DateTime.Now });
-            _highScores = _highScores.OrderByDescending(h => h.Score).ToList();
-            _hidePlayerNameEntry = true;
-            _playerName = string.Empty;
-            localStorage.SetItem<List<ScoreModel>>("highscores", _highScores);
+            highScores.Add(new ScoreModel { PlayerName = playerName, Score = CurrentScore, Stage = CurrentStage, ScoreDate = DateTime.Now });
+            highScores = highScores.OrderByDescending(h => h.Score).ToList();
+            hidePlayerNameEntry = true;
+            playerName = string.Empty;
+            localStorage.SetItem<List<ScoreModel>>("highscores", highScores);
         }
     }
 }

@@ -1,17 +1,17 @@
 ﻿@using Models;
 
-<div class="dialog" hidden="@_hidden" @onclick="@InvokeOnClickAction">
-    <h1>@_heading</h1>
-    @if (!string.IsNullOrEmpty(_subHeading))
+<div class="dialog" hidden="@hidden" @onclick="@InvokeOnClickAction">
+    <h1>@heading</h1>
+    @if (!string.IsNullOrEmpty(subHeading))
     {
-        <p>@_subHeading</p>
+        <p>@subHeading</p>
     }
 </div>
 
 @code {
-    private string _heading => GetHeading();
-    private string _subHeading => GetSubHeading();
-    private bool _hidden => DisplayMode == DialogDisplayMode.Hide;
+    private string heading => GetHeading();
+    private string subHeading => GetSubHeading();
+    private bool hidden => DisplayMode == DialogDisplayMode.Hide;
 
     [Parameter]
     public DialogDisplayMode DisplayMode { get; set; }
@@ -22,10 +22,10 @@
     private string GetHeading()
     {
         var headings = new Dictionary<DialogDisplayMode, string>() {
-                { DialogDisplayMode.Start, "Click to Start"},
-                { DialogDisplayMode.GameOver, "Game Over!"},
-                { DialogDisplayMode.Complete, "You Win!" }
-            };
+            { DialogDisplayMode.Start, "Click to Start"},
+            { DialogDisplayMode.GameOver, "Game Over!"},
+            { DialogDisplayMode.Complete, "You Win!" }
+        };
 
         headings.TryGetValue(DisplayMode, out string heading);
         return heading;

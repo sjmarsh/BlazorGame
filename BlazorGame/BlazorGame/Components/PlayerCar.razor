@@ -1,12 +1,12 @@
 ﻿@using Models; 
 
-<div class="player-car @_color-car @_css" style="@_styles"></div>
+<div class="player-car @color-car @css" style="@styles"></div>
 
 @code {
     [Parameter]
     public PlayerCarModel Model { get; set; }
 
-    string _color => Model.Color;
-    string _css => Model.HasCollision ? "car-shake" : string.Empty;
-    string _styles => $"top: {Model.Top}px; left: {Model.LeftSide}px; height: {Model.Height}px; width: {Model.Width}px;";
+    string color => Model.Color;
+    string css => Model.HasCollision ? "car-shake" : string.Empty;
+    string styles => $"top: {Model.Top}px; left: {Model.LeftSide}px; height: {Model.Height}px; width: {Model.Width}px;";
 }

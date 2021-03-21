@@ -1,24 +1,24 @@
 ﻿@using BlazorGame.Models
 
-@if (_game == null)
+@if (game == null)
 {
     <em>Loading...</em>
 }
 else
 {
     <div class="game-area" tabindex="0"  @onkeyup="HandleKeyUp">
-        <div class="fog" hidden="@_hideFog"></div>
+        <div class="fog" hidden="@hideFog"></div>
         <div class="message-area">
-            <Dialog DisplayMode="@GetDialogDisplayMode()" OnClickAction="_game.StartStopGame" />
-            <HighScores DisplayMode="@GetHighScoresDisplayMode()" CurrentScore ="_game.Stats.Score" CurrentStage="_game.Stats.StageNumber" />
+            <Dialog DisplayMode="@GetDialogDisplayMode()" OnClickAction="game.StartStopGame" />
+            <HighScores DisplayMode="@GetHighScoresDisplayMode()" CurrentScore ="game.Stats.Score" CurrentStage="game.Stats.StageNumber" />
         </div>                
-        <Stats Model="@_game.Stats"/>
-        <div class="sky @_skyCss"></div>
-        <div class="ground @_groundCss">
+        <Stats Model="@game.Stats"/>
+        <div class="sky @skyCss"></div>
+        <div class="ground @groundCss">
             <div class="road">
-                <MedianStrip Manager="_game.MedianStripManager"></MedianStrip>
-                <AICars Manager="_game.AICarManager"></AICars>
-                <PlayerCar Model="_game.PlayerCar" />
+                <MedianStrip Manager="game.MedianStripManager"></MedianStrip>
+                <AICars Manager="game.AICarManager"></AICars>
+                <PlayerCar Model="game.PlayerCar" />
             </div>
         </div>
     </div>
@@ -26,30 +26,30 @@ else
 
 @code {
 
-    GameModel _game { get; set; }
+    GameModel game { get; set; }
 
-    private string _skyCss => $"sky-{_game.StageManager.CurrentStage.Name}";
-    private string _groundCss => $"ground-{_game.StageManager.CurrentStage.Name}";
-    private bool _hideFog => !_game.StageManager.CurrentStage.ShowFog;
+    private string skyCss => $"sky-{game.StageManager.CurrentStage.Name}";
+    private string groundCss => $"ground-{game.StageManager.CurrentStage.Name}";
+    private bool hideFog => !game.StageManager.CurrentStage.ShowFog;
 
     protected override void OnInitialized()
     {
-        _game = new GameModel();
-        _game.MainLoopCompleted += (o, e) => StateHasChanged();
+        game = new GameModel();
+        game.MainLoopCompleted += (o, e) => StateHasChanged();
     }
 
     private DialogDisplayMode GetDialogDisplayMode()
     {
         var mode = DialogDisplayMode.Hide;
-        if(!_game.IsRunning && !_game.IsComplete && !_game.PlayerCar.HasCollision)
+        if(!game.IsRunning && !game.IsComplete && !game.PlayerCar.HasCollision)
         {
             mode = DialogDisplayMode.Start;
         }
-        else if (_game.PlayerCar.HasCollision)
+        else if (game.PlayerCar.HasCollision)
         {
             mode = DialogDisplayMode.GameOver;
         }
-        else if (_game.IsComplete)
+        else if (game.IsComplete)
         {
             mode = DialogDisplayMode.Complete;
         }
@@ -59,31 +59,31 @@ else
 
     private HighScoresDisplayMode GetHighScoresDisplayMode()
     {
-        return _game.IsRunning ? HighScoresDisplayMode.Hide : HighScoresDisplayMode.Button;
+        return game.IsRunning ? HighScoresDisplayMode.Hide : HighScoresDisplayMode.Button;
     }
 
     private void HandleKeyUp(KeyboardEventArgs e)
     {
-        if(_game.IsRunning)
+        if(game.IsRunning)
         {
             if (e.Key == "ArrowLeft")
             {
-                _game.MovePlayerCarLeft();
+                game.MovePlayerCarLeft();
             }
 
             if (e.Key == "ArrowRight")
             {
-                _game.MovePlayerCarRight();
+                game.MovePlayerCarRight();
             }
 
             if (e.Key == "C" || e.Key == "c")
             {
-                _game.ToggleCollisionsEnabled();
+                game.ToggleCollisionsEnabled();
             }
         }
         if(e.Key == " ")
         {
-            _game.StartStopGame();
+            game.StartStopGame();
         }
     }
 }
