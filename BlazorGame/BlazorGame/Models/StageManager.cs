@@ -58,11 +58,11 @@ namespace BlazorGame.Models
         {
             stages = new List<Stage>
             {
-                new Stage { Number = 1, Name = "rural", DurationMinutes = 1, Speed = 1 },
-                new Stage { Number = 2, Name = "desert", DurationMinutes = 1, Speed = 2 },
-                new Stage { Number = 3, Name = "alpine", DurationMinutes = 1, Speed = 2, ShowFog = true },
-                new Stage { Number = 4, Name = "city", DurationMinutes = 1, Speed = 3 },
-                new Stage { Number = 5, Name = "coast", DurationMinutes = 1, Speed = 4 }
+                new Stage { Number = 1, StageType = StageType.Rural, DurationMinutes = 1, Speed = 1 },
+                new Stage { Number = 2, StageType = StageType.Desert, DurationMinutes = 1, Speed = 2 },
+                new Stage { Number = 3, StageType = StageType.Alpine, DurationMinutes = 1, Speed = 2, ShowFog = true },
+                new Stage { Number = 4, StageType = StageType.City, DurationMinutes = 1, Speed = 3 },
+                new Stage { Number = 5, StageType = StageType.Coast, DurationMinutes = 1, Speed = 4 }
             };
         } 
         

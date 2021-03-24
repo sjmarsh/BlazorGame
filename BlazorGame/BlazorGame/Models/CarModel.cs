@@ -1,15 +1,11 @@
 ﻿namespace BlazorGame.Models
 {
-    public class CarModel
+    public class CarModel : UIElement
     {
-        public double Top { get; protected set; }
-        public double LeftSide { get; protected set; }
-        public double Height { get; protected set; }
-        public double Width { get; protected set; }
         public string Color { get; set; }
         public bool HasCollision { get; protected set; }
         
-        public double RightSide => LeftSide + Width;
+        public double RightSide => Left + Width;
         public double Bottom => Top + Height;
 
         public void Crash()

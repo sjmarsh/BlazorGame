@@ -15,7 +15,7 @@ namespace BlazorGame.Models
         {
             rand = new Random();
             Top = -20;
-            LeftSide = RandomizeStartPosition();
+            Left = RandomizeStartPosition();
             Height = MinHeight;
             Width = MinWidth;
             Color = RandomizeCarColor();
@@ -32,13 +32,13 @@ namespace BlazorGame.Models
             Top += MoveDistance;
             Width *= GrowPerspectiveRatio;
             Height *= GrowPerspectiveRatio;
-            if(LeftSide < MedianStripPosition)
+            if(Left < MedianStripPosition)
             {
-                LeftSide -= (MoveLeftDistance * moveVelocity);
+                Left -= (MoveLeftDistance * moveVelocity);
             }
             else
             {
-                LeftSide += (MoveRightDistance * moveVelocity);
+                Left += (MoveRightDistance * moveVelocity);
             }
         }
 

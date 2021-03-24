@@ -1,0 +1,9 @@
+﻿.scenery-item {
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 38px;
+    width: 38px;
+    position: absolute;
+    z-index: 1;
+}

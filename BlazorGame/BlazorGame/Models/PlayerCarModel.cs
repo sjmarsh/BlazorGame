@@ -11,7 +11,7 @@
         public PlayerCarModel()
         {
             Top = 210;
-            LeftSide = 20;
+            Left = 20;
             Height = MaxHeight;
             Width = MaxWidth;
             Color = "red";
@@ -19,17 +19,17 @@
 
         public void MoveLeft()
         {
-            if(LeftSide >= RoadLeftSide)
+            if(Left >= RoadLeftSide)
             {
-                LeftSide -= MoveDistance;
+                Left -= MoveDistance;
             }
         }
 
         public void MoveRight()
         {
-            if(LeftSide <= RoadRightSide)
+            if(Left <= RoadRightSide)
             {
-                LeftSide += MoveDistance;
+                Left += MoveDistance;
             }
         }
     }

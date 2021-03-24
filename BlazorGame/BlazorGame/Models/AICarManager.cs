@@ -6,7 +6,7 @@ namespace BlazorGame.Models
     public class AICarManager
     {
         private const int NewCarSpawnHeight = 120;
-        private const int BottomOfRoad = 290;
+        private const int CarDespawnHeight = 290;
 
         public AICarManager()
         {
@@ -32,7 +32,7 @@ namespace BlazorGame.Models
                 aiCar.Move();
             }
 
-            var bottomCar = Cars.FirstOrDefault(a => a.Top > BottomOfRoad);
+            var bottomCar = Cars.FirstOrDefault(a => a.Top > CarDespawnHeight);
             if (bottomCar != null)
             {
                 Cars.Remove(bottomCar);
@@ -45,8 +45,8 @@ namespace BlazorGame.Models
             var carNearPlayer = GetCarNearestToPlayerCar(playerCar);
             if (carNearPlayer != null)
             {
-                var carHasCollided = (carNearPlayer.RightSide >= playerCar.LeftSide && carNearPlayer.LeftSide <= playerCar.LeftSide)
-                    || (carNearPlayer.LeftSide <= playerCar.RightSide && carNearPlayer.RightSide >= playerCar.RightSide);
+                var carHasCollided = (carNearPlayer.RightSide >= playerCar.Left && carNearPlayer.Left <= playerCar.Left)
+                    || (carNearPlayer.Left <= playerCar.RightSide && carNearPlayer.RightSide >= playerCar.RightSide);
                 if (carHasCollided)
                 {
                     carCollidedWithPlayer = carNearPlayer;

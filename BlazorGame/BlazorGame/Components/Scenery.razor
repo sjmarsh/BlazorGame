@@ -1,0 +1,19 @@
+﻿@using Models;
+
+<div class="scenery">
+    @foreach (var sceneryModel in Manager.Scenery)
+    {
+        <div class="scenery-item" style="@GetStyle(sceneryModel.LeftItem)"></div>
+        <div class="scenery-item" style="@GetStyle(sceneryModel.RightItem)"></div>
+    }
+</div>
+
+@code {
+    [Parameter]
+    public SceneryManager Manager { get; set; }
+
+    private string GetStyle(SceneryItemModel model)
+    {
+        return $"top: {model.Top}px; left: {model.Left}px; height: {model.Height}px; width: {model.Width}px; background-image: url(../images/scenery/{model.SceneryType.FullName}.png);";
+    }
+}

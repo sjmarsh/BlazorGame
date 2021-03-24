@@ -14,6 +14,7 @@ namespace BlazorGame.Models
             GameTimer = new Stopwatch();
             Stats = new StatsModel();
             MedianStripManager = new MedianStripManager();
+            SceneryManager = new SceneryManager();
             AICarManager = new AICarManager();
             ResetGame();
         }
@@ -26,6 +27,7 @@ namespace BlazorGame.Models
         public StatsModel Stats { get; private set; }
         public StageManager StageManager { get; private set; }
         public MedianStripManager MedianStripManager { get; private set; }
+        public SceneryManager SceneryManager { get; private set; }
         public PlayerCarModel PlayerCar { get; private set; }
         public AICarManager AICarManager { get; private set; }
 
@@ -71,6 +73,7 @@ namespace BlazorGame.Models
             Stats.Reset();
             StageManager.Reset();
             MedianStripManager.Reset();
+            SceneryManager.Reset();
             PlayerCar = new PlayerCarModel();
             AICarManager.Reset();
             isCollisionsEnabled = true;          
@@ -98,8 +101,10 @@ namespace BlazorGame.Models
                 AICarManager.Animate();
                 StageManager.ShowCheckpointIfRequired(GameTimer.Elapsed.TotalSeconds);
                 StageManager.IncrementStageIfRequired(GameTimer.Elapsed.TotalMinutes);
-                
-                if(StageManager.AllStagesCompleted)
+                SceneryManager.CurrentStageType = StageManager.CurrentStage.StageType;
+                SceneryManager.Animate();
+
+                if (StageManager.AllStagesCompleted)
                 {
                     GameOver(true);
                 }
