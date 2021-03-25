@@ -44,12 +44,27 @@ namespace BlazorGame.Models
             var sceneryTypes = new List<SceneryType>
             {
                 new SceneryType{ StageType = StageType.Rural, Name = "tree" },
+                new SceneryType{ StageType = StageType.Rural, Name = "tree-2" },
                 new SceneryType{ StageType = StageType.Rural, Name = "sign" },
+                new SceneryType{ StageType = StageType.Rural, Name = "sign-2" },
+
                 new SceneryType{ StageType = StageType.Desert, Name = "cactus" },
                 new SceneryType{ StageType = StageType.Desert, Name = "cactus-2" },
+                new SceneryType{ StageType = StageType.Desert, Name = "weed" },
                 new SceneryType{ StageType = StageType.Desert, Name = "sign" },
+
                 new SceneryType{ StageType = StageType.Alpine, Name = "tree" },
+                new SceneryType{ StageType = StageType.Alpine, Name = "tree-2" },
+                new SceneryType{ StageType = StageType.Alpine, Name = "sign" },
+                new SceneryType{ StageType = StageType.Alpine, Name = "sign-2" },
+                new SceneryType{ StageType = StageType.Alpine, Name = "snowman" },
+
                 new SceneryType{ StageType = StageType.City, Name = "sign" },
+                new SceneryType{ StageType = StageType.City, Name = "sign-2" },
+                new SceneryType{ StageType = StageType.City, Name = "sign-3" },
+                new SceneryType{ StageType = StageType.City, Name = "sign-4" },
+                new SceneryType{ StageType = StageType.City, Name = "sign-5" },
+
                 new SceneryType{ StageType = StageType.Coast, Name = "palm" }
             };
 
