@@ -12,7 +12,7 @@ else
         <div class="message-area">
             <Dialog DisplayMode="@GetDialogDisplayMode()" OnClickAction="game.StartStopGame" />
             <HighScores DisplayMode="@GetHighScoresDisplayMode()" CurrentScore="game.Stats.Score" CurrentStage="game.Stats.StageNumber" />
-            <Checkpoint Hidden="@hideCheckpoint"></Checkpoint>
+            <Checkpoint Hidden="@hideCheckpoint" StageManager="game.StageManager"></Checkpoint>
         </div>                
         <Stats Model="@game.Stats"/>
         <div class="sky @skyCss"></div>

@@ -1,6 +1,23 @@
-﻿<div class="checkpoint" hidden="@Hidden">GET READY FOR NEXT STAGE</div>
+﻿@using Models;
+
+<div class="checkpoint" hidden="@Hidden">@GetMessage()</div>
 
 @code {
     [Parameter]
     public bool Hidden { get; set; }
+
+    [Parameter]
+    public StageManager StageManager { get; set; }
+
+    private string GetMessage()
+    {
+        if(StageManager.IsFinalStage)
+        {
+            return "ALMOST AT THE FINISH LINE!";
+        }
+        else
+        {
+            return $"GET READY FOR STAGE {StageManager.CurrentStage.Number + 1}";
+        }
+    }
 }

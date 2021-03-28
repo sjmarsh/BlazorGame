@@ -112,7 +112,7 @@ namespace BlazorGame.Models
                 Stats.Update(GameTimer.Elapsed, StageManager.CurrentStage.Number);
 
                 MainLoopCompleted?.Invoke(this, EventArgs.Empty);
-                await Task.Delay(100 / StageManager.CurrentStage.Speed);
+                await Task.Delay(Convert.ToInt32(100 / StageManager.CurrentStage.Speed));
             }
         }
        

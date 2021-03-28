@@ -16,6 +16,8 @@ namespace BlazorGame.Models
 
         public Stage CurrentStage => stages.Single(s => s.Number == currentStageNumber);
 
+        public bool IsFinalStage => currentStageNumber == stages.Count;
+
         public bool AllStagesCompleted { get; private set; }
 
         public bool ShowCheckpoint { get; private set; }
@@ -58,7 +60,7 @@ namespace BlazorGame.Models
         {
             stages = new List<Stage>
             {
-                new Stage { Number = 1, StageType = StageType.Rural, DurationMinutes = 1, Speed = 1 },
+                new Stage { Number = 1, StageType = StageType.Rural, DurationMinutes = 1, Speed = 1.5 },
                 new Stage { Number = 2, StageType = StageType.Desert, DurationMinutes = 1, Speed = 2 },
                 new Stage { Number = 3, StageType = StageType.Alpine, DurationMinutes = 1, Speed = 2, ShowFog = true },
                 new Stage { Number = 4, StageType = StageType.City, DurationMinutes = 1, Speed = 3 },
