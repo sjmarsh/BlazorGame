@@ -7,6 +7,6 @@
     public PlayerCarModel Model { get; set; }
 
     string color => Model.Color;
-    string css => Model.HasCollision ? "car-shake" : string.Empty;
+    string css => Model.HasCollision ? "car-crash" : string.Empty;
     string styles => $"top: {Model.Top}px; left: {Model.Left}px; height: {Model.Height}px; width: {Model.Width}px;";
 }
