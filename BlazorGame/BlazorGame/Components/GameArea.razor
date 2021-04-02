@@ -29,6 +29,7 @@ else
 
 @code {
 
+    [Inject]
     GameModel game { get; set; }
 
     private string skyCss => $"sky-{game.StageManager.CurrentStage.Name}";
@@ -38,7 +39,6 @@ else
 
     protected override void OnInitialized()
     {
-        game = new GameModel();
         game.MainLoopCompleted += (o, e) => StateHasChanged();
     }
 

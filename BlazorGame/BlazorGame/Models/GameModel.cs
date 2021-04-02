@@ -8,14 +8,15 @@ namespace BlazorGame.Models
     {
         private bool isCollisionsEnabled;
 
-        public GameModel()
+        public GameModel(StageManager stageManager, MedianStripManager medianStripManager, SceneryManager sceneryManager, AICarManager aICarManager)
         {
-            StageManager = new StageManager();
+            StageManager = stageManager;
+            MedianStripManager = medianStripManager;
+            SceneryManager = sceneryManager;
+            AICarManager = aICarManager;
             GameTimer = new Stopwatch();
             Stats = new StatsModel();
-            MedianStripManager = new MedianStripManager();
-            SceneryManager = new SceneryManager();
-            AICarManager = new AICarManager();
+            
             ResetGame();
         }
 

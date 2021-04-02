@@ -1,5 +1,7 @@
 using Blazored.LocalStorage;
+using BlazorGame.Models;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
+using Microsoft.Extensions.DependencyInjection;
 using System.Threading.Tasks;
 
 namespace BlazorGame
@@ -11,7 +13,11 @@ namespace BlazorGame
             var builder = WebAssemblyHostBuilder.CreateDefault(args);
             builder.RootComponents.Add<App>("#app");
 
-            // builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
+            builder.Services.AddScoped<GameModel>();
+            builder.Services.AddScoped<StageManager>();
+            builder.Services.AddScoped<MedianStripManager>();
+            builder.Services.AddScoped<SceneryManager>();
+            builder.Services.AddScoped<AICarManager>();
             builder.Services.AddBlazoredLocalStorage();
 
             await builder.Build().RunAsync();
