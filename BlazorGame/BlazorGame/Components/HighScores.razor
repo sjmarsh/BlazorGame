@@ -83,10 +83,21 @@
 
     private bool NewScoreEntryIsHidden()
     {
-        var scores = highScores.Select(h => h.Score);
-        return scores.Any() && CurrentScore <= scores.Min() && scores.Count() > MaxHighScoreCount
+        return  IsCurrentScoreTooLow() 
+            || IsCurrentScoreAlreadyEntered()
             || CurrentScore == 0
             || hidePlayerNameEntry;
+    }
+
+    private bool IsCurrentScoreTooLow()
+    {
+        var scores = highScores.Select(h => h.Score).ToArray();
+        return scores.Any() && CurrentScore <= scores.Min() && scores.Count() > MaxHighScoreCount;
+    }
+
+    private bool IsCurrentScoreAlreadyEntered()
+    {
+        return highScores.Any(h => h.Score == CurrentScore && h.Stage == CurrentStage && h.ScoreDate.Date == DateTime.Today.Date);
     }
 
     private void HandleKeyUp(KeyboardEventArgs e)
