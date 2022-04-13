@@ -12,11 +12,11 @@ Or
 - Copy the https local host address into your browser, eg. https://localhost:5001
 
 
-###Play the game 
+### Play the game 
 The game is hosted with an Azure Static Web App here:
 
 [https://lemon-pond-056c2d110.1.azurestaticapps.net/](https://lemon-pond-056c2d110.1.azurestaticapps.net/) 
 
 Use left and right cursor keys to control the player car.
 
-<img src="https://github.com/sjmarsh/BlazorGame/BlazorGame.png />
+<img src="https://github.com/sjmarsh/BlazorGame/blob/main/BlazorGame.png?raw=true" />
