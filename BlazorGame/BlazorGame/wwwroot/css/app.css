@@ -8,6 +8,10 @@ h1 {
     margin: 0px;
 }
 
+*, *:focus, *:hover {
+    outline: none;
+}
+
 .game-area {
     width: 500px;
     height: 640px;
