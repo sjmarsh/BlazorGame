@@ -24,6 +24,10 @@ else
                 <PlayerCar Model="game.PlayerCar" />
             </div>
         </div>
+        <div class="controls">
+            <div class="button-left" @onclick="MoveLeft" />
+            <div class="button-right" @onclick="MoveRight" />
+        </div>
     </div>
 }
 
@@ -72,12 +76,12 @@ else
         {
             if (e.Key == "ArrowLeft")
             {
-                game.MovePlayerCarLeft();
+                MoveLeft();
             }
 
             if (e.Key == "ArrowRight")
             {
-                game.MovePlayerCarRight();
+                MoveRight();
             }
 
             if (e.Key == "C" || e.Key == "c")
@@ -89,5 +93,15 @@ else
         {
             game.StartStopGame();
         }
+    }
+
+    private void MoveLeft()
+    {
+        game.MovePlayerCarLeft();
+    }
+
+    private void MoveRight()
+    {
+        game.MovePlayerCarRight();
     }
 }

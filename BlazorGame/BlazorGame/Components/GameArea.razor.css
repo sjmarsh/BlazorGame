@@ -1,0 +1,60 @@
+﻿.controls {
+    height: 50px;
+    width: 100%;
+    top: 42%;
+    position: absolute;
+    z-index: 5;
+}
+
+.button-right,
+.button-left {
+    position: absolute;
+    padding: 5px;
+    margin: 30px auto;
+    background: radial-gradient(circle at 25px 25px, #fcdd03, #fc4e03);
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    transition: all 0.2s linear;
+}
+
+.button-right {
+    right: 10px;
+}
+
+.button-left {
+    left: 10px;
+}
+
+.button-right:hover {
+    transform: translate3d(10px, 0, 0);
+}
+
+.button-left:hover {
+    transform: translate3d(-10px, 0, 0);
+}
+
+.button-right::after,
+.button-left::after {
+    content: "";
+    position: absolute;
+    z-index: 11;
+    display: block;
+    width: 25px;
+    height: 25px;
+    border-top: 5px solid #fc4e03;
+    border-left: 5px solid #fc4e03;
+}
+
+.button-right:after {
+    top: 16px;
+    left: 10px;
+    transform: rotate(135deg);
+}
+
+.button-left:after {
+    top: 16px;
+    left: 20px;
+    transform: rotate(315deg);
+}
+
