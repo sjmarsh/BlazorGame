@@ -24,10 +24,7 @@ else
                 <PlayerCar Model="game.PlayerCar" />
             </div>
         </div>
-        <div class="controls">
-            <div class="button-left" @onclick="MoveLeft" />
-            <div class="button-right" @onclick="MoveRight" />
-        </div>
+        <GameControls MoveLeftAction="MoveLeft" MoveRightAction="MoveRight" />
     </div>
 }
 

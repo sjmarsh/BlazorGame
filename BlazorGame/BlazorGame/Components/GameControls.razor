@@ -1,0 +1,12 @@
+﻿<div class="controls">
+    <div class="button-left" @onclick="MoveLeftAction" />
+    <div class="button-right" @onclick="MoveRightAction" />
+</div>
+
+@code {
+    [Parameter]
+    public Action MoveLeftAction { get; set; }
+
+    [Parameter]
+    public Action MoveRightAction { get; set; }
+}
