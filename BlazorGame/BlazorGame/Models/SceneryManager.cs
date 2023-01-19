@@ -45,7 +45,7 @@ namespace BlazorGame.Models
                         
             if(browserDimensions.IsMobileDevice)
             {
-                newScenerySpawnHeight = (int)browserDimensions.Height / 2;
+                newScenerySpawnHeight = (int)browserDimensions.Height / 2 - 50;
                 sceneryDespawnHeight = (int)browserDimensions.Height - 100;
 
                 leftItemPosition = (int)(browserDimensions.Width * 0.28);

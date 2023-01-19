@@ -6,39 +6,49 @@ namespace BlazorGame.Models
     {
         private const int MinWidth = 24;
         private const int MinHeight = 10;
-        private const int MedianStripPosition = 75;
-        
+
         private readonly Random rand;
         private readonly double moveVelocity;
-
-        public AICarModel()
+        private readonly double roadWidth;
+        
+        public AICarModel(double roadWidth)
         {
+            this.roadWidth = roadWidth;
+
             rand = new Random();
             Top = -20;
-            Left = RandomizeStartPosition();
+
+            var leftCarSpawnPosition = (int)(roadWidth * 0.13);
+            var rightCarSpawnPosition = (int)(roadWidth * 0.53);
+
+            Left = RandomizeStartPosition(leftCarSpawnPosition, rightCarSpawnPosition);
             Height = MinHeight;
             Width = MinWidth;
             Color = RandomizeCarColor();
             moveVelocity = RandomizeMoveVelocity();
+            
+            ;
         }
 
         public void Move()
         {
             const double MoveDistance = 5;
             const double GrowPerspectiveRatio = 1.028;
-            const double MoveLeftDistance = 2.7;
-            const double MoveRightDistance = 1.3;
+
+            double moveLeftDistance = roadWidth * 0.018;//2.7;
+            double moveRightDistance = roadWidth * 0.0086;//1.3;
 
             Top += MoveDistance;
             Width *= GrowPerspectiveRatio;
             Height *= GrowPerspectiveRatio;
-            if(Left < MedianStripPosition)
+            var medianStripPosition = (int)roadWidth / 2;
+            if (Left < medianStripPosition)
             {
-                Left -= (MoveLeftDistance * moveVelocity);
+                Left -= (moveLeftDistance * moveVelocity);
             }
             else
             {
-                Left += (MoveRightDistance * moveVelocity);
+                Left += (moveRightDistance * moveVelocity);
             }
         }
 
@@ -49,9 +59,9 @@ namespace BlazorGame.Models
             return colors[randomIndex];
         }
 
-        private int RandomizeStartPosition()
+        private int RandomizeStartPosition(int leftCarSpawnPosition, int rightCarSpawnPosition)
         {
-            var positions = new int[] { 20, 80 };  // left or right side of road
+            var positions = new int[] { leftCarSpawnPosition, rightCarSpawnPosition };  // left or right side of road
             var randomPosition = rand.Next(0, positions.Length);
             return positions[randomPosition];
         }

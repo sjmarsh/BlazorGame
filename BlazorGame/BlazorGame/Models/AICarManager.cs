@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using BlazorGame.Services;
+using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace BlazorGame.Models
 {
@@ -7,9 +9,13 @@ namespace BlazorGame.Models
     {
         private const int NewCarSpawnHeight = 120;
         private const int CarDespawnHeight = 290;
+        
+        IBrowserService browserService;
 
-        public AICarManager()
+        public AICarManager(IBrowserService browserService)
         {
+            this.browserService = browserService;
+
             Cars = new List<AICarModel>();
         }
 
@@ -20,11 +26,23 @@ namespace BlazorGame.Models
             Cars.Clear();
         }
 
-        public void Animate()
+        public async Task Animate()
         {
-            if (!Cars.Any() || !Cars.Any(a => a.Top < NewCarSpawnHeight))
+            var newCarSpawnHeight = NewCarSpawnHeight;
+            var carDespawnHeight = CarDespawnHeight;
+            var roadWidth = Constants.DefaultRoadWidth;
+
+            var browserDimensions = await browserService.GetDimensions();
+            if (browserDimensions.IsMobileDevice)
             {
-                Cars.Add(new AICarModel());
+                newCarSpawnHeight = (int)browserDimensions.Height / 2 - 50;
+                carDespawnHeight = (int)browserDimensions.Height - 100;
+                roadWidth = (int)(browserDimensions.Width * 0.36);
+            }
+
+            if (!Cars.Any() || !Cars.Any(a => a.Top < newCarSpawnHeight))
+            {
+                Cars.Add(new AICarModel(roadWidth));
             }
 
             foreach (var aiCar in Cars)
@@ -32,7 +50,7 @@ namespace BlazorGame.Models
                 aiCar.Move();
             }
 
-            var bottomCar = Cars.FirstOrDefault(a => a.Top > CarDespawnHeight);
+            var bottomCar = Cars.FirstOrDefault(a => a.Top > carDespawnHeight);
             if (bottomCar != null)
             {
                 Cars.Remove(bottomCar);
