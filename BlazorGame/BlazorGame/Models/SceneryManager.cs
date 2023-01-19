@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using BlazorGame.Services;
+using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace BlazorGame.Models
 {
@@ -7,9 +9,15 @@ namespace BlazorGame.Models
     {
         private const int NewScenerySpawnHeight = 60;
         private const int SceneryDespawnHeight = 180;
+        private const int LeftItemPosition = 125;
+        private const int RightItemPosition = 345;
         
-        public SceneryManager()
+        IBrowserService browserService;
+        
+        public SceneryManager(IBrowserService browserService)
         {
+            this.browserService = browserService;
+
             Scenery = new List<SceneryModel>();
         }
 
@@ -22,16 +30,31 @@ namespace BlazorGame.Models
             Scenery.Clear();
         }
                 
-        public void Animate()
+        public async Task Animate()
         {
-            AnimateModels(Scenery);
+            await AnimateModels(Scenery);
         }
 
-        private void AnimateModels(IList<SceneryModel> models)
+        private async Task AnimateModels(IList<SceneryModel> models)
         {
-            if (!models.Any() || !models.Any(a => a.LeftItem.Top < NewScenerySpawnHeight))
+            var browserDimensions = await browserService.GetDimensions();
+            var newScenerySpawnHeight = NewScenerySpawnHeight;
+            var sceneryDespawnHeight = SceneryDespawnHeight;
+            var leftItemPosition = LeftItemPosition;
+            var rightItemPosition = RightItemPosition;
+                        
+            if(browserDimensions.IsMobileDevice)
             {
-                models.Add(new SceneryModel(CurrentStageType));
+                newScenerySpawnHeight = (int)browserDimensions.Height / 2;
+                sceneryDespawnHeight = (int)browserDimensions.Height - 100;
+
+                leftItemPosition = (int)(browserDimensions.Width * 0.28);
+                rightItemPosition = (int)(browserDimensions.Width * 0.72);
+            }
+
+            if (!models.Any() || !models.Any(a => a.LeftItem.Top < newScenerySpawnHeight))
+            {
+                models.Add(new SceneryModel(CurrentStageType, leftItemPosition, rightItemPosition));
             }
 
             foreach (var sceneryModel in models)

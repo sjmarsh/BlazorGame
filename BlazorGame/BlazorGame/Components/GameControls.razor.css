@@ -26,12 +26,10 @@
     left: 10px;
 }
 
-.button-right:hover {
-    transform: translate3d(10px, 0, 0);
-}
-
-.button-left:hover {
-    transform: translate3d(-10px, 0, 0);
+.button-left:active,
+.button-right:active {
+    background: radial-gradient(circle at 25px 25px, #f8fc03, #fc6f03);
+    transform: translateY(3px);
 }
 
 .button-right::after,

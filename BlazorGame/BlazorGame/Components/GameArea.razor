@@ -38,67 +38,74 @@ else
     private bool hideFog => !game.StageManager.CurrentStage.ShowFog;
     private bool hideCheckpoint => !game.StageManager.ShowCheckpoint;
 
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
+        await game.ResetGame();
         game.MainLoopCompleted += (o, e) => StateHasChanged();
     }
 
     private DialogDisplayMode GetDialogDisplayMode()
     {
         var mode = DialogDisplayMode.Hide;
-        if(!game.IsRunning && !game.IsComplete && !game.PlayerCar.HasCollision)
+        if(game != null)
         {
-            mode = DialogDisplayMode.Start;
+            if (!game.IsRunning && !game.IsComplete && !game.PlayerCar.HasCollision)
+            {
+                mode = DialogDisplayMode.Start;
+            }
+            else if (game.PlayerCar.HasCollision)
+            {
+                mode = DialogDisplayMode.GameOver;
+            }
+            else if (game.IsComplete)
+            {
+                mode = DialogDisplayMode.Complete;
+            }
         }
-        else if (game.PlayerCar.HasCollision)
-        {
-            mode = DialogDisplayMode.GameOver;
-        }
-        else if (game.IsComplete)
-        {
-            mode = DialogDisplayMode.Complete;
-        }
-
+        
         return mode;
     }
 
     private HighScoresDisplayMode GetHighScoresDisplayMode()
     {
-        return game.IsRunning ? HighScoresDisplayMode.Hide : HighScoresDisplayMode.Button;
+        return game != null && game.IsRunning ? HighScoresDisplayMode.Hide : HighScoresDisplayMode.Button;
     }
 
-    private void HandleKeyUp(KeyboardEventArgs e)
+    private async Task HandleKeyUp(KeyboardEventArgs e)
     {
-        if(game.IsRunning)
+        if(game != null)
         {
-            if (e.Key == "ArrowLeft")
+            if (game.IsRunning)
             {
-                MoveLeft();
-            }
+                if (e.Key == "ArrowLeft")
+                {
+                    MoveLeft();
+                }
 
-            if (e.Key == "ArrowRight")
-            {
-                MoveRight();
-            }
+                if (e.Key == "ArrowRight")
+                {
+                    MoveRight();
+                }
 
-            if (e.Key == "C" || e.Key == "c")
-            {
-                game.ToggleCollisionsEnabled();
+                if (e.Key == "C" || e.Key == "c")
+                {
+                    game.ToggleCollisionsEnabled();
+                }
             }
-        }
-        if(e.Key == " ")
-        {
-            game.StartStopGame();
-        }
+            if (e.Key == " ")
+            {
+                await game.StartStopGame();
+            }
+        }    
     }
 
     private void MoveLeft()
     {
-        game.MovePlayerCarLeft();
+        game!.MovePlayerCarLeft();
     }
 
     private void MoveRight()
     {
-        game.MovePlayerCarRight();
+        game!.MovePlayerCarRight();
     }
 }

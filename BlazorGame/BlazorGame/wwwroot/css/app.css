@@ -195,3 +195,64 @@ h1 {
         right: 0.75rem;
         top: 0.5rem;
     }
+
+@media screen and (max-width: 991.98px) {
+
+    body {
+        margin: 0px;
+    }
+
+    .game-area {
+        width: 100vw;
+        height: 100vh;
+        position: absolute;
+        left: 0px;
+    }
+
+    .border-left {
+        width: 0px;
+        height: 100vh;
+        position: absolute;
+        background-color: white;
+        z-index: +1;
+    }
+
+    .border-right {
+        left: 100vw;
+        width: 0px;
+        height: 100vh;
+        position: absolute;
+        background-color: white;
+        z-index: +1;
+    }
+
+    .sky {
+        width: 100vw;
+        height: 50vh;
+        position: absolute;
+        background-size: cover;
+        background-repeat: no-repeat;
+    }
+
+    .ground {
+        top: 50vh;
+        width: 100vw;
+        height: 50vh;
+        position: absolute;
+        background-size: cover;
+        background-repeat: no-repeat;
+        overflow: hidden;
+        z-index: -3;
+    }
+
+    .road {
+        border-bottom: 50vh solid #555;
+        border-left: 32vw solid transparent;
+        border-right: 32vw solid transparent;
+        height: 0px;
+        width: 36vw;
+        position: absolute;
+        z-index: -2;
+    }
+
+}

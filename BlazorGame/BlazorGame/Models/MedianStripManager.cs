@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using BlazorGame.Services;
+using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace BlazorGame.Models
 {
@@ -8,17 +10,20 @@ namespace BlazorGame.Models
         private const int TotalStripes = 80;
         private const int BottomOfRoad = 330;
 
+        private readonly IBrowserService browserService;
         private int medianCounter;
         private int stripeCounter;
-
-        public MedianStripManager()
+        
+        public MedianStripManager(IBrowserService browserService)
         {
-            Reset();
+            this.browserService = browserService;
+            
+            
         }
 
         public List<MedianStripeModel> MedianStripes { get; set; }
 
-        public void Reset()
+        public async Task Reset()
         {
             medianCounter = 0;
             stripeCounter = 0;
@@ -26,11 +31,11 @@ namespace BlazorGame.Models
 
             for (int i = 0; i < TotalStripes; i++)
             {
-                Animate();
+                await Animate();
             }
         }
         
-        public void Animate()
+        public async Task Animate()
         {
             if (!MedianStripes.Any() || medianCounter > 2)
             {
@@ -43,7 +48,14 @@ namespace BlazorGame.Models
                 stripe.Move();
             }
 
-            var bottomStripe = MedianStripes.FirstOrDefault(m => m.Top > BottomOfRoad);
+            var bottomOfRoad = BottomOfRoad;
+            var browserDimensions = await browserService.GetDimensions();
+            if(browserDimensions != null && browserDimensions.Width < 991.9)
+            {
+                bottomOfRoad = (int)browserDimensions.Height;
+            }
+
+            var bottomStripe = MedianStripes.FirstOrDefault(m => m.Top > bottomOfRoad);
             if (bottomStripe != null)
             {
                 MedianStripes.Remove(bottomStripe);

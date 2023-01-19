@@ -17,7 +17,7 @@
     public DialogDisplayMode DisplayMode { get; set; }
 
     [Parameter]
-    public Action OnClickAction { get; set; }
+    public Func<Task> OnClickAction { get; set; }
 
     private string GetHeading()
     {

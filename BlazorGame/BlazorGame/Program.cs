@@ -1,5 +1,6 @@
 using Blazored.LocalStorage;
 using BlazorGame.Models;
+using BlazorGame.Services;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using System.Threading.Tasks;
@@ -18,6 +19,7 @@ namespace BlazorGame
             builder.Services.AddScoped<MedianStripManager>();
             builder.Services.AddScoped<SceneryManager>();
             builder.Services.AddScoped<AICarManager>();
+            builder.Services.AddScoped<IBrowserService, BrowserService>();
             builder.Services.AddBlazoredLocalStorage();
 
             await builder.Build().RunAsync();

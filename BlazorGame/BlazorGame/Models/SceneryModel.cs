@@ -6,10 +6,10 @@
 
         private double moveLeftDistance;
         
-        public SceneryModel(StageType stageType)
+        public SceneryModel(StageType stageType, int leftItemPosition, int rightItemPosition)
         {
-            LeftItem = new SceneryItemModel(125, stageType);
-            RightItem = new SceneryItemModel(345, stageType);
+            LeftItem = new SceneryItemModel(leftItemPosition, stageType);
+            RightItem = new SceneryItemModel(rightItemPosition, stageType);
                         
             moveLeftDistance = HorizontalMoveDistance;
         }
