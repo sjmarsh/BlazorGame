@@ -36,7 +36,7 @@ namespace BlazorGame.Models
             var browserDimensions = await browserService.GetDimensions();
             if (browserDimensions.IsMobileDevice)
             {
-                newCarSpawnHeight = (int)(browserDimensions.Height * 0.25);
+                newCarSpawnHeight = (int)(browserDimensions.Height * 0.15);
                 carDespawnHeight = (int)browserDimensions.Height - 100;
                 roadHeight = browserDimensions.Height * 0.5;
                 roadWidth = browserDimensions.Width * 0.36;
