@@ -201,6 +201,7 @@ h1 {
 
     body {
         margin: 0px;
+        overflow: hidden;
     }
 
     .game-area {
@@ -208,9 +209,11 @@ h1 {
         height: 100vh;
         position: absolute;
         left: 0px;
+        overflow: hidden;
     }
 
     .border-left {
+        visibility: collapse;
         width: 0px;
         height: 100vh;
         position: absolute;
@@ -219,6 +222,7 @@ h1 {
     }
 
     .border-right {
+        visibility: collapse;
         left: 100vw;
         width: 0px;
         height: 100vh;
