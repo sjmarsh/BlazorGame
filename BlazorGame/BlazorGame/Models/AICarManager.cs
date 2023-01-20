@@ -30,19 +30,21 @@ namespace BlazorGame.Models
         {
             var newCarSpawnHeight = NewCarSpawnHeight;
             var carDespawnHeight = CarDespawnHeight;
+            var roadHeight = Constants.DefaultRoadHeight;
             var roadWidth = Constants.DefaultRoadWidth;
 
             var browserDimensions = await browserService.GetDimensions();
             if (browserDimensions.IsMobileDevice)
             {
-                newCarSpawnHeight = (int)browserDimensions.Height / 2 - 50;
+                newCarSpawnHeight = (int)(browserDimensions.Height * 0.25);
                 carDespawnHeight = (int)browserDimensions.Height - 100;
-                roadWidth = (int)(browserDimensions.Width * 0.36);
+                roadHeight = browserDimensions.Height * 0.5;
+                roadWidth = browserDimensions.Width * 0.36;
             }
 
             if (!Cars.Any() || !Cars.Any(a => a.Top < newCarSpawnHeight))
             {
-                Cars.Add(new AICarModel(roadWidth));
+                Cars.Add(new AICarModel(roadHeight, roadWidth));
             }
 
             foreach (var aiCar in Cars)

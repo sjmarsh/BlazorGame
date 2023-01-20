@@ -1,22 +1,26 @@
 ﻿using System;
 using System.Threading.Tasks;
 using System.Diagnostics;
+using BlazorGame.Services;
 
 namespace BlazorGame.Models
 {
     public class GameModel
     {
+        private readonly IBrowserService browserService;
         private bool isCollisionsEnabled;
 
-        public GameModel(StageManager stageManager, MedianStripManager medianStripManager, SceneryManager sceneryManager, AICarManager aICarManager)
+        public GameModel(StageManager stageManager, MedianStripManager medianStripManager, SceneryManager sceneryManager, AICarManager aICarManager, IBrowserService browserService)
         {
             StageManager = stageManager;
             MedianStripManager = medianStripManager;
             SceneryManager = sceneryManager;
             AICarManager = aICarManager;
+            this.browserService = browserService;
+
             GameTimer = new Stopwatch();
             Stats = new StatsModel();
-            PlayerCar = new PlayerCarModel();
+            PlayerCar = new PlayerCarModel(this.browserService);
         }
 
         public EventHandler MainLoopCompleted;
@@ -74,7 +78,7 @@ namespace BlazorGame.Models
             StageManager.Reset();
             await MedianStripManager.Reset();
             SceneryManager.Reset();
-            PlayerCar = new PlayerCarModel();
+            await PlayerCar.Reset();
             AICarManager.Reset();
             isCollisionsEnabled = true;          
         }
@@ -98,7 +102,7 @@ namespace BlazorGame.Models
                 }
 
                 await MedianStripManager.Animate();
-                AICarManager.Animate();
+                await AICarManager.Animate();
                 StageManager.ShowCheckpointIfRequired(GameTimer.Elapsed.TotalSeconds);
                 StageManager.IncrementStageIfRequired(GameTimer.Elapsed.TotalMinutes);
                 SceneryManager.CurrentStageType = StageManager.CurrentStage.StageType;

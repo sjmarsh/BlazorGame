@@ -9,47 +9,59 @@ namespace BlazorGame.Models
 
         private readonly Random rand;
         private readonly double moveVelocity;
+        private readonly double roadHeight;
         private readonly double roadWidth;
         
-        public AICarModel(double roadWidth)
+        public AICarModel(double roadHeight, double roadWidth)
         {
+            this.roadHeight = roadHeight;
             this.roadWidth = roadWidth;
 
             rand = new Random();
             Top = -20;
 
             var leftCarSpawnPosition = (int)(roadWidth * 0.13);
-            var rightCarSpawnPosition = (int)(roadWidth * 0.53);
+            var rightCarSpawnPosition = (int)(roadWidth * 0.54);
 
             Left = RandomizeStartPosition(leftCarSpawnPosition, rightCarSpawnPosition);
             Height = MinHeight;
             Width = MinWidth;
             Color = RandomizeCarColor();
             moveVelocity = RandomizeMoveVelocity();
-            
-            ;
         }
 
         public void Move()
         {
             const double MoveDistance = 5;
-            const double GrowPerspectiveRatio = 1.028;
 
-            double moveLeftDistance = roadWidth * 0.018;//2.7;
-            double moveRightDistance = roadWidth * 0.0086;//1.3;
-
+            double growPerspectiveRatio = 1 + (10 / roadHeight);
+            if (roadWidth == Constants.DefaultRoadWidth)
+            {
+                growPerspectiveRatio = 1.028;
+            }
+            
             Top += MoveDistance;
-            Width *= GrowPerspectiveRatio;
-            Height *= GrowPerspectiveRatio;
+            Width *= growPerspectiveRatio;
+            Height *= growPerspectiveRatio;
+                        
+            var top = Math.Abs(Top) > 0 ? Math.Abs(Top) : 1;
+            
+            double moveLeftDistance = top * 0.018;
+            double moveRightDistance = top * 0.009;
+
             var medianStripPosition = (int)roadWidth / 2;
+            
             if (Left < medianStripPosition)
             {
                 Left -= (moveLeftDistance * moveVelocity);
+                //Left -= moveLeftDistance;
+                
             }
             else
             {
                 Left += (moveRightDistance * moveVelocity);
-            }
+                //Left += moveRightDistance;
+            }            
         }
 
         private string RandomizeCarColor()
