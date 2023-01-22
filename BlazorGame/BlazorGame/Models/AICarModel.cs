@@ -6,28 +6,34 @@ namespace BlazorGame.Models
     {
         private const int MinWidth = 24;
         private const int MinHeight = 10;
+        private const int HiddenTopRoadHeight = 20;
 
         private readonly Random rand;
-        private readonly double moveVelocity;
         private readonly double roadHeight;
         private readonly double roadWidth;
-        
+
+        private double leftCarSpawnPosition;
+        private double rightCarSpawnPosition;
+        private double randomMoveVelocity;
+
         public AICarModel(double roadHeight, double roadWidth)
         {
             this.roadHeight = roadHeight;
             this.roadWidth = roadWidth;
 
             rand = new Random();
-            Top = -20;
-
-            var leftCarSpawnPosition = (int)(roadWidth * 0.13);
-            var rightCarSpawnPosition = (int)(roadWidth * 0.54);
-
-            Left = RandomizeStartPosition(leftCarSpawnPosition, rightCarSpawnPosition);
+                        
+            Top = -HiddenTopRoadHeight;
             Height = MinHeight;
-            Width = MinWidth;
+            Width = MinWidth;           
             Color = RandomizeCarColor();
-            moveVelocity = RandomizeMoveVelocity();
+
+            leftCarSpawnPosition = (roadWidth * 0.3);
+            rightCarSpawnPosition = roadWidth * 0.6;
+
+            Left = GetRandomLeftOrRightCarPosition(leftCarSpawnPosition, rightCarSpawnPosition);
+
+            randomMoveVelocity = GetRandomMoveVelocity();
         }
 
         public void Move()
@@ -44,23 +50,21 @@ namespace BlazorGame.Models
             Width *= growPerspectiveRatio;
             Height *= growPerspectiveRatio;
                         
-            var top = Math.Abs(Top) > 0 ? Math.Abs(Top) : 1;
-            
-            double moveLeftDistance = top * 0.018;
-            double moveRightDistance = top * 0.009;
+            var xAxisToTravel = 0d;
+            if (Top > 0)
+            {
+                var yAxisTravelledPercentage = Top / (roadHeight + HiddenTopRoadHeight);
+                xAxisToTravel = roadWidth / 2 * yAxisTravelledPercentage * randomMoveVelocity; 
+            }
 
-            var medianStripPosition = (int)roadWidth / 2;
-            
+            var medianStripPosition = roadWidth / 2;
             if (Left < medianStripPosition)
             {
-                Left -= (moveLeftDistance * moveVelocity);
-                //Left -= moveLeftDistance;
-                
+                Left = leftCarSpawnPosition - Width - xAxisToTravel;
             }
             else
             {
-                Left += (moveRightDistance * moveVelocity);
-                //Left += moveRightDistance;
+                Left = rightCarSpawnPosition + xAxisToTravel;
             }            
         }
 
@@ -71,14 +75,14 @@ namespace BlazorGame.Models
             return colors[randomIndex];
         }
 
-        private int RandomizeStartPosition(int leftCarSpawnPosition, int rightCarSpawnPosition)
+        private double GetRandomLeftOrRightCarPosition(double leftCarSpawnPosition, double rightCarSpawnPosition)
         {
-            var positions = new int[] { leftCarSpawnPosition, rightCarSpawnPosition };  // left or right side of road
+            var positions = new double[] { leftCarSpawnPosition, rightCarSpawnPosition };
             var randomPosition = rand.Next(0, positions.Length);
             return positions[randomPosition];
         }
 
-        private double RandomizeMoveVelocity()
+        private double GetRandomMoveVelocity()
         {
             var moveVelocityInt = rand.Next(1, 4);
             return (double)moveVelocityInt / 3;
