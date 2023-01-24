@@ -2,16 +2,18 @@
 {
     public class SceneryModel
     {
-        protected const double HorizontalMoveDistance = 5.9;
+        private readonly double verticalMoveDisance;
+        private readonly double groundHeight;
+        private readonly double groundWidth;
 
-        private double moveLeftDistance;
-        
-        public SceneryModel(StageType stageType, int leftItemPosition, int rightItemPosition)
+        public SceneryModel(StageType stageType, double leftItemSpawnXAxis, double rightItemSpwanXAxis, double verticalMoveDisance, double groundHeight, double groundWidth)
         {
-            LeftItem = new SceneryItemModel(leftItemPosition, stageType);
-            RightItem = new SceneryItemModel(rightItemPosition, stageType);
-                        
-            moveLeftDistance = HorizontalMoveDistance;
+            this.verticalMoveDisance = verticalMoveDisance;
+            this.groundHeight = groundHeight;
+            this.groundWidth = groundWidth;
+
+            LeftItem = new SceneryItemModel(leftItemSpawnXAxis, stageType);
+            RightItem = new SceneryItemModel(rightItemSpwanXAxis, stageType);           
         }
 
         public SceneryItemModel LeftItem { get; private set; }
@@ -19,17 +21,20 @@
 
         public void Move()
         {
-            LeftItem.MoveVertical();
-            RightItem.MoveVertical();
+            LeftItem.MoveVertical(verticalMoveDisance);
+            RightItem.MoveVertical(verticalMoveDisance);
             MoveHorizontal();
         }
 
         private void MoveHorizontal()
         {
+            var vertialDistanceMoved = LeftItem.Top / groundHeight;
+            var hoizontalDistanceToMove = groundWidth / 2 * vertialDistanceMoved;
             // Need to compensate for left item model size increase as it moves down the screen
-            moveLeftDistance += LeftItem.Width * 0.01;
-            LeftItem.MoveHorizontal(-moveLeftDistance);
-            RightItem.MoveHorizontal(HorizontalMoveDistance);
+            var leftItemMoveDistance = -1 * (hoizontalDistanceToMove + LeftItem.Width);
+
+            LeftItem.MoveHorizontal(leftItemMoveDistance);
+            RightItem.MoveHorizontal(hoizontalDistanceToMove);
         }
     }
 }

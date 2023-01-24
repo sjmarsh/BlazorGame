@@ -38,8 +38,8 @@ namespace BlazorGame.Models
             {
                 newCarSpawnHeight = (int)(browserDimensions.Height * 0.15);
                 carDespawnHeight = (int)browserDimensions.Height - 100;
-                roadHeight = browserDimensions.Height * 0.5;
-                roadWidth = browserDimensions.Width * 0.36;
+                roadHeight = browserDimensions.Height * Constants.BrowserRoadHeightPercentage;
+                roadWidth = browserDimensions.Width * Constants.BrowserRoadWidthPercentage;
             }
 
             if (!Cars.Any() || !Cars.Any(a => a.Top < newCarSpawnHeight))
