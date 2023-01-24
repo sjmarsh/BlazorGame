@@ -9,6 +9,7 @@ namespace BlazorGame.Models
         private const int HiddenTopRoadHeight = 20;
 
         private readonly Random rand;
+        private readonly bool isMobileDevice;
         private readonly double roadHeight;
         private readonly double roadWidth;
 
@@ -16,8 +17,9 @@ namespace BlazorGame.Models
         private double rightCarSpawnPosition;
         private double randomMoveVelocity;
 
-        public AICarModel(double roadHeight, double roadWidth)
+        public AICarModel(bool isMobileDevice, double roadHeight, double roadWidth)
         {
+            this.isMobileDevice = isMobileDevice;
             this.roadHeight = roadHeight;
             this.roadWidth = roadWidth;
 
@@ -38,14 +40,13 @@ namespace BlazorGame.Models
 
         public void Move()
         {
-            const double MoveDistance = 5;
-
-            double growPerspectiveRatio = 1 + (10 / roadHeight);
-            if (roadWidth == Constants.DefaultRoadWidth)
+            const double MoveDistance = 5;            
+            var growPerspectiveRatio = 1.028;
+            if (isMobileDevice)
             {
-                growPerspectiveRatio = 1.028;
+                growPerspectiveRatio = 1 + (10 / roadHeight);
             }
-            
+
             Top += MoveDistance;
             Width *= growPerspectiveRatio;
             Height *= growPerspectiveRatio;

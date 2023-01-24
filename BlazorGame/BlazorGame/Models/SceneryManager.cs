@@ -7,11 +7,11 @@ namespace BlazorGame.Models
 {
     public partial class SceneryManager
     {
-        IBrowserService browserService;
+        private readonly IGameDimensionService gameDimensionService;
         
-        public SceneryManager(IBrowserService browserService)
+        public SceneryManager(IGameDimensionService gameDimensionService)
         {
-            this.browserService = browserService;
+            this.gameDimensionService = gameDimensionService;
 
             Scenery = new List<SceneryModel>();
         }
@@ -32,19 +32,12 @@ namespace BlazorGame.Models
 
         private async Task AnimateModels(IList<SceneryModel> models)
         {
-            var browserDimensions = await browserService.GetDimensions();
+            var gameDimensions = await gameDimensionService.GetDimensions();
 
-            var groundHeight = Constants.DefaultGroundHeight;
-            var groundWidth = Constants.DefaultGroundWidth;
-            var roadWidth = Constants.DefaultRoadWidth;
-
-            if (browserDimensions.IsMobileDevice)
-            {
-                groundHeight = browserDimensions.Height * Constants.BrowserGroundHeightPercentage;
-                groundWidth = browserDimensions.Width;
-                roadWidth = browserDimensions.Width * Constants.BrowserRoadWidthPercentage;
-            }
-
+            var groundHeight = gameDimensions.GroundHeight;
+            var groundWidth = gameDimensions.GroundWidth;
+            var roadWidth = gameDimensions.RoadWidth;
+            
             var newScenerySpawnHeight = groundHeight * 0.2;
             var sceneryDespawnHeight = groundHeight * 0.6;
 
