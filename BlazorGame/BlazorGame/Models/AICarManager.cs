@@ -7,8 +7,8 @@ namespace BlazorGame.Models
 {
     public class AICarManager
     {
-        private const int NewCarSpawnHeight = 120;
-        private const int CarDespawnHeight = 290;
+        private const double NewCarSpawnHeight = 120;
+        private const double CarDespawnHeight = 290;
 
         private readonly IGameDimensionService gameDimensionService;
         
@@ -37,8 +37,8 @@ namespace BlazorGame.Models
                         
             if (gameDimensions.IsMobileDevice)
             {
-                newCarSpawnHeight = (int)(gameDimensions.GameAreaHeight * 0.15);
-                carDespawnHeight = (int)gameDimensions.GameAreaHeight - 100;
+                newCarSpawnHeight = gameDimensions.GameAreaHeight * 0.15;
+                carDespawnHeight = gameDimensions.GameAreaHeight * 0.85;
             }
 
             if (!Cars.Any() || !Cars.Any(a => a.Top < newCarSpawnHeight))
