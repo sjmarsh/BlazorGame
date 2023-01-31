@@ -7,20 +7,20 @@ namespace BlazorGame.Models
 {
     public class GameModel
     {
-        private readonly IBrowserService browserService;
+        private readonly IGameDimensionService gameDimensionService;
         private bool isCollisionsEnabled;
 
-        public GameModel(StageManager stageManager, MedianStripManager medianStripManager, SceneryManager sceneryManager, AICarManager aICarManager, IBrowserService browserService)
+        public GameModel(StageManager stageManager, MedianStripManager medianStripManager, SceneryManager sceneryManager, AICarManager aICarManager, IGameDimensionService gameDimensionService)
         {
             StageManager = stageManager;
             MedianStripManager = medianStripManager;
             SceneryManager = sceneryManager;
             AICarManager = aICarManager;
-            this.browserService = browserService;
+            this.gameDimensionService = gameDimensionService;
 
             GameTimer = new Stopwatch();
             Stats = new StatsModel();
-            PlayerCar = new PlayerCarModel(this.browserService);
+            PlayerCar = new PlayerCarModel(this.gameDimensionService);
         }
 
         public EventHandler MainLoopCompleted;

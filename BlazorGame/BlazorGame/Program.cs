@@ -20,6 +20,7 @@ namespace BlazorGame
             builder.Services.AddScoped<SceneryManager>();
             builder.Services.AddScoped<AICarManager>();
             builder.Services.AddScoped<IBrowserService, BrowserService>();
+            builder.Services.AddScoped<IGameDimensionService, GameDimensionService>();
             builder.Services.AddBlazoredLocalStorage();
 
             await builder.Build().RunAsync();

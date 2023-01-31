@@ -11,11 +11,11 @@ namespace BlazorGame.Models
         private const int RoadLeftSide = -140;
         private const int RoadRightSide = 180;
 
-        private readonly IBrowserService browserService;
+        private readonly IGameDimensionService gameDimensionService;
 
-        public PlayerCarModel(IBrowserService browserService)
+        public PlayerCarModel(IGameDimensionService gameDimensionService)
         {
-            this.browserService = browserService;
+            this.gameDimensionService = gameDimensionService;
         }
 
         public async Task Reset()
@@ -27,12 +27,12 @@ namespace BlazorGame.Models
             Color = "red";
             HasCollision = false;
 
-            var browserDimensions = await browserService.GetDimensions();
-            if (browserDimensions.IsMobileDevice)
+            var gameDimensions = await gameDimensionService.GetDimensions();
+            if (gameDimensions.IsMobileDevice)
             {
-                Top = browserDimensions.Height / 2 * .72;
-                Height = browserDimensions.Height / 2 * .12;
-                Width = browserDimensions.Width * .27;
+                Top = gameDimensions.GroundHeight * 0.72;
+                Height = gameDimensions.GroundHeight * 0.12;
+                Width = gameDimensions.GroundWidth * 0.27;
             }
         }
 

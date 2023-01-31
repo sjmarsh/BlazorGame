@@ -7,14 +7,14 @@ namespace BlazorGame.Models
 {
     public class AICarManager
     {
-        private const int NewCarSpawnHeight = 120;
-        private const int CarDespawnHeight = 290;
-        
-        IBrowserService browserService;
+        private const double NewCarSpawnHeight = 120;
+        private const double CarDespawnHeight = 290;
 
-        public AICarManager(IBrowserService browserService)
+        private readonly IGameDimensionService gameDimensionService;
+        
+        public AICarManager(IGameDimensionService gameDimensionService)
         {
-            this.browserService = browserService;
+            this.gameDimensionService = gameDimensionService;
 
             Cars = new List<AICarModel>();
         }
@@ -28,23 +28,22 @@ namespace BlazorGame.Models
 
         public async Task Animate()
         {
+            var gameDimensions = await gameDimensionService.GetDimensions();
+
             var newCarSpawnHeight = NewCarSpawnHeight;
             var carDespawnHeight = CarDespawnHeight;
-            var roadHeight = Constants.DefaultRoadHeight;
-            var roadWidth = Constants.DefaultRoadWidth;
-
-            var browserDimensions = await browserService.GetDimensions();
-            if (browserDimensions.IsMobileDevice)
+            var roadHeight = gameDimensions.RoadHeight;
+            var roadWidth = gameDimensions.RoadWidth;
+                        
+            if (gameDimensions.IsMobileDevice)
             {
-                newCarSpawnHeight = (int)(browserDimensions.Height * 0.15);
-                carDespawnHeight = (int)browserDimensions.Height - 100;
-                roadHeight = browserDimensions.Height * 0.5;
-                roadWidth = browserDimensions.Width * 0.36;
+                newCarSpawnHeight = gameDimensions.GameAreaHeight * 0.15;
+                carDespawnHeight = gameDimensions.GameAreaHeight * 0.85;
             }
 
             if (!Cars.Any() || !Cars.Any(a => a.Top < newCarSpawnHeight))
             {
-                Cars.Add(new AICarModel(roadHeight, roadWidth));
+                Cars.Add(new AICarModel(gameDimensions.IsMobileDevice, roadHeight, roadWidth));
             }
 
             foreach (var aiCar in Cars)

@@ -9,33 +9,35 @@ namespace BlazorGame.Models
         private const int SpawnHeight = -20;
         private const int MinWidth = 20;
         private const int MinHeight = 20;
-
+        
+        private readonly double spawnPositionXAxis;
+        
         private Random rand;
 
-        public SceneryItemModel(double left_XAxis, StageType stageType)
+        public SceneryItemModel(double spawnPositionXAxis, StageType stageType)
         {
             Top = SpawnHeight;
             Height = MinHeight;
             Width = MinWidth;
-            Left = left_XAxis;
+            Left = spawnPositionXAxis;
             rand = new Random();
             SceneryType = GetRandomSceneryType(stageType);
+            this.spawnPositionXAxis = spawnPositionXAxis;
         }
 
         public SceneryType SceneryType { get; private set; }
 
-        public void MoveVertical()
-        {
-            const double MoveDistance = 8;
+        public void MoveVertical(double moveDistance)
+        {            
             const double GrowPerspectiveRatio = 1.08;
-            Top += MoveDistance;
+            Top += moveDistance;
             Width *= GrowPerspectiveRatio;
             Height *= GrowPerspectiveRatio;
         }
 
         public void MoveHorizontal(double moveDistance)
         {
-            Left += moveDistance;
+            Left = spawnPositionXAxis + moveDistance;
         }
 
         private SceneryType GetRandomSceneryType(StageType stageType)

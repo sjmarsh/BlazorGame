@@ -7,16 +7,11 @@ namespace BlazorGame.Models
 {
     public partial class SceneryManager
     {
-        private const int NewScenerySpawnHeight = 60;
-        private const int SceneryDespawnHeight = 180;
-        private const int LeftItemPosition = 125;
-        private const int RightItemPosition = 345;
+        private readonly IGameDimensionService gameDimensionService;
         
-        IBrowserService browserService;
-        
-        public SceneryManager(IBrowserService browserService)
+        public SceneryManager(IGameDimensionService gameDimensionService)
         {
-            this.browserService = browserService;
+            this.gameDimensionService = gameDimensionService;
 
             Scenery = new List<SceneryModel>();
         }
@@ -37,24 +32,22 @@ namespace BlazorGame.Models
 
         private async Task AnimateModels(IList<SceneryModel> models)
         {
-            var browserDimensions = await browserService.GetDimensions();
-            var newScenerySpawnHeight = NewScenerySpawnHeight;
-            var sceneryDespawnHeight = SceneryDespawnHeight;
-            var leftItemPosition = LeftItemPosition;
-            var rightItemPosition = RightItemPosition;
-                        
-            if(browserDimensions.IsMobileDevice)
-            {
-                newScenerySpawnHeight = (int)browserDimensions.Height / 2 - 50;
-                sceneryDespawnHeight = (int)browserDimensions.Height - 100;
+            var gameDimensions = await gameDimensionService.GetDimensions();
 
-                leftItemPosition = (int)(browserDimensions.Width * 0.28);
-                rightItemPosition = (int)(browserDimensions.Width * 0.72);
-            }
+            var groundHeight = gameDimensions.GroundHeight;
+            var groundWidth = gameDimensions.GroundWidth;
+            var roadWidth = gameDimensions.RoadWidth;
+            
+            var newScenerySpawnHeight = groundHeight * 0.2;
+            var sceneryDespawnHeight = groundHeight * 0.6;
 
+            var leftItemSpawnXAxis = groundWidth * 0.25;
+            var rightItemSpawnAxis = groundWidth * 0.70;
+            var verticalMoveDistance = groundHeight * 0.025;
+                                    
             if (!models.Any() || !models.Any(a => a.LeftItem.Top < newScenerySpawnHeight))
             {
-                models.Add(new SceneryModel(CurrentStageType, leftItemPosition, rightItemPosition));
+                models.Add(new SceneryModel(CurrentStageType, leftItemSpawnXAxis, rightItemSpawnAxis, verticalMoveDistance, groundHeight, groundWidth));
             }
 
             foreach (var sceneryModel in models)
@@ -62,7 +55,7 @@ namespace BlazorGame.Models
                 sceneryModel.Move();
             }
 
-            var bottomSceneryItem = models.FirstOrDefault(a => a.LeftItem.Top > SceneryDespawnHeight);
+            var bottomSceneryItem = models.FirstOrDefault(a => a.LeftItem.Top > sceneryDespawnHeight);
             if (bottomSceneryItem != null)
             {
                 models.Remove(bottomSceneryItem);
