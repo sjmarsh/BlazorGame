@@ -235,7 +235,7 @@ h1 {
         width: 100vw;
         height: 50vh;
         position: absolute;
-        background-size: cover;
+        background-size: 100% 100%;
         background-repeat: no-repeat;
     }
 
