@@ -42,7 +42,7 @@ namespace BlazorGame.Models
             var sceneryDespawnHeight = groundHeight * 0.6;
 
             var leftItemSpawnXAxis = groundWidth * 0.25;
-            var rightItemSpawnAxis = groundWidth * 0.70;
+            var rightItemSpawnAxis = groundWidth * 0.75;
             var verticalMoveDistance = groundHeight * 0.025;
                                     
             if (!models.Any() || !models.Any(a => a.LeftItem.Top < newScenerySpawnHeight))
