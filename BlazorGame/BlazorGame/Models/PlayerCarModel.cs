@@ -8,8 +8,9 @@ namespace BlazorGame.Models
         private const int MoveDistance = 20;
         private const int MaxHeight = 38;
         private const int MaxWidth = 92;
-        private const int RoadLeftSide = -140;
-        private const int RoadRightSide = 180;
+        
+        private double roadLeftSide = -140;
+        private double roadRightSide = 180;
 
         private readonly IGameDimensionService gameDimensionService;
 
@@ -31,14 +32,25 @@ namespace BlazorGame.Models
             if (gameDimensions.IsMobileDevice)
             {
                 Top = gameDimensions.GroundHeight * 0.72;
+                
                 Height = gameDimensions.GroundHeight * 0.12;
                 Width = gameDimensions.GroundWidth * 0.27;
+                if (gameDimensions.IsLandscape)
+                {
+                    Height = gameDimensions.GroundHeight * 0.27;
+                    Width = gameDimensions.GroundWidth * 0.12;
+                }
+
+                Left = (gameDimensions.RoadWidth * 0.5) - (Width * 0.5);
+                
+                roadLeftSide = -1 * (gameDimensions.RoadWidth * 0.9);
+                roadRightSide = gameDimensions.RoadWidth * 2 * 0.9 - Width;
             }
         }
 
         public void MoveLeft()
         {
-            if(Left >= RoadLeftSide)
+            if(Left >= roadLeftSide)
             {
                 Left -= MoveDistance;
             }
@@ -46,7 +58,7 @@ namespace BlazorGame.Models
 
         public void MoveRight()
         {
-            if(Left <= RoadRightSide)
+            if(Left <= roadRightSide)
             {
                 Left += MoveDistance;
             }

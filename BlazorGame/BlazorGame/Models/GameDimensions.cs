@@ -3,6 +3,7 @@
     public record GameDimensions
     {
         public bool IsMobileDevice { get; set; }
+        public bool IsLandscape { get; set; }
 
         public double GameAreaHeight { get; set; }
         public double GameAreaWidth { get; set; }

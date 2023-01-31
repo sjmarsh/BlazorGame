@@ -23,6 +23,7 @@ namespace BlazorGame.Services
             var dimensions = new GameDimensions
             {
                 IsMobileDevice = false,
+                IsLandscape = false,
                 GameAreaHeight = 640,
                 GameAreaWidth = 500,
                 GroundHeight = 310,
@@ -40,6 +41,7 @@ namespace BlazorGame.Services
                     dimensions = dimensions with
                     {
                         IsMobileDevice = true,
+                        IsLandscape = browserDimensions.Width > browserDimensions.Height, 
                         GameAreaHeight = browserDimensions.Height,
                         GameAreaWidth = browserDimensions.Width,
                         GroundHeight = browserDimensions.Height * 0.5,
