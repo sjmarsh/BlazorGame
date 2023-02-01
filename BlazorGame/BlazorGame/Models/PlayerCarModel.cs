@@ -30,19 +30,22 @@ namespace BlazorGame.Models
 
             var gameDimensions = await gameDimensionService.GetDimensions();
             if (gameDimensions.IsMobileDevice)
-            {
-                Top = gameDimensions.GroundHeight * 0.72;
-                
+            {                
                 Height = gameDimensions.GroundHeight * 0.12;
-                Width = gameDimensions.GroundWidth * 0.27;
+                Width = gameDimensions.GroundWidth * 0.27;                
                 if (gameDimensions.IsLandscape)
                 {
                     Height = gameDimensions.GroundHeight * 0.27;
                     Width = gameDimensions.GroundWidth * 0.12;
                 }
+                
+                Top = gameDimensions.GroundHeight - (Height * 2);
+                if (gameDimensions.IsLandscape)
+                {
+                    Top = gameDimensions.GroundHeight - (Height * 1.5);
+                }
 
                 Left = (gameDimensions.RoadWidth * 0.5) - (Width * 0.5);
-                
                 roadLeftSide = -1 * (gameDimensions.RoadWidth * 0.9);
                 roadRightSide = gameDimensions.RoadWidth * 2 * 0.9 - Width;
             }
