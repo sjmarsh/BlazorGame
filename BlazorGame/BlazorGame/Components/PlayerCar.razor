@@ -1,12 +1,17 @@
 ﻿@using Models; 
 
-<div class="player-car @color-car @css" style="@styles"></div>
+<div class="player-car @color-car @crash @lights" style="@styles"></div>
 
 @code {
     [Parameter]
     public PlayerCarModel Model { get; set; }
 
+    [Parameter]
+    [EditorRequired]
+    public StageManager StageManager { get; set; }
+
     string color => Model.Color;
-    string css => Model.HasCollision ? "car-crash" : string.Empty;
+    string crash => Model.HasCollision ? "car-crash" : string.Empty;
     string styles => $"top: {Model.Top}px; left: {Model.Left}px; height: {Model.Height}px; width: {Model.Width}px;";
+    string lights => StageManager.CurrentStage.IsNightTime ? "player-car-lights" : string.Empty;
 }

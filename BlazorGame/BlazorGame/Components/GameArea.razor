@@ -18,10 +18,10 @@ else
         <div class="sky @skyCss"></div>
         <div class="ground @groundCss">
             <Scenery Manager="game.SceneryManager"></Scenery>
-            <div class="road">
+            <div class="@roadCss">
                 <MedianStrip Manager="game.MedianStripManager"></MedianStrip>
-                <AICars Manager="game.AICarManager"></AICars>
-                <PlayerCar Model="game.PlayerCar" />
+                <AICars Manager="game.AICarManager" StageManager="game.StageManager"></AICars>
+                <PlayerCar Model="game.PlayerCar" StageManager="game.StageManager" />
             </div>
         </div>
         <GameControls MoveLeftAction="MoveLeft" MoveRightAction="MoveRight" />
@@ -35,6 +35,7 @@ else
 
     private string skyCss => $"sky-{game.StageManager.CurrentStage.Name}";
     private string groundCss => $"ground-{game.StageManager.CurrentStage.Name}";
+    private string roadCss => "road " + (game.StageManager.CurrentStage.IsNightTime ? "road-night" : "");
     private bool hideFog => !game.StageManager.CurrentStage.ShowFog;
     private bool hideCheckpoint => !game.StageManager.ShowCheckpoint;
 

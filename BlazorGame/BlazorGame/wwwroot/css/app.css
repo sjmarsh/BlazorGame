@@ -59,6 +59,10 @@ h1 {
     background-image: url(../images/sky/sky-desert.png);
 }
 
+.sky-night {
+    background-image: url(../images/sky/sky-night.png);
+}
+
 .sky-alpine {
     background-image: url(../images/sky/sky-alpine.png);
 }
@@ -88,6 +92,10 @@ h1 {
     background-image: url(../images/ground/ground-desert.png);
 }
 
+.ground-night {
+    background-image: url(../images/ground/ground-night.png);
+}
+
 .ground-alpine {
     background-image: url(../images/ground/ground-alpine.png);
 }
@@ -110,24 +118,38 @@ h1 {
     z-index: -2;
 }
 
+.road-night {
+    border-bottom: 310px solid #0e0d0d;
+}
+
 .player-car {
+    position: absolute;
     background-size: contain;
     background-position: center;
     background-repeat: no-repeat;
+    border-radius: 90px;
     height: 38px;
     width: 92px;
-    position: absolute;
     z-index: 0;
+}
+
+.player-car-lights {
+    box-shadow: 1px -30px 35px #FFFFFF;
 }
 
 .ai-car {
     background-size: contain;
     background-position: center;
     background-repeat: no-repeat;
+    border-radius: 90px;
     height: 38px;
     width: 92px;
     position: absolute;
     z-index: 0;
+}
+
+.ai-car-lights {
+    box-shadow: 1px -30px 35px #FFFFFF;
 }
 
 .red-car {

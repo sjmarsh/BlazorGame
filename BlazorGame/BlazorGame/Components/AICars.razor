@@ -10,6 +10,10 @@
     [Parameter]
     public AICarManager Manager { get; set; }
 
+    [Parameter]
+    [EditorRequired]
+    public StageManager StageManager { get; set; }
+
     private string GetColor(AICarModel model)
     {
         return model.Color.ToLower();
@@ -17,7 +21,9 @@
 
     private string GetCss(AICarModel model)
     {
-        return model.HasCollision ? "car-crash" : string.Empty;
+        var crash = model.HasCollision ? "car-crash" : string.Empty;
+        var lights = StageManager.CurrentStage.IsNightTime ? "ai-car-lights" : "";
+        return $"{crash} {lights}";
     }
 
     private string GetStyles(AICarModel model)

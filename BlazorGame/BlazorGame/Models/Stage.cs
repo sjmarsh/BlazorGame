@@ -7,6 +7,7 @@
         public int DurationMinutes { get; set; }
         public double Speed { get; set; }
         public bool ShowFog { get; set; }
+        public bool IsNightTime { get; set; }
         public string Name { get { return StageType.ToString().ToLower(); } }
     }
 }

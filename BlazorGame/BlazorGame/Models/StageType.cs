@@ -4,6 +4,7 @@
     {
         Rural,
         Desert,
+        Night,
         Alpine,
         City,
         Coast
