@@ -12,7 +12,9 @@
     top: 0%;
     left: 50%;
     width: 80%;
+    max-height: 60vh;
     margin-left: -40%;
+    overflow-y: scroll;
     text-align: center;
     color: #fdf500;
     background-color: rgba(0, 0, 0, 0.8);
