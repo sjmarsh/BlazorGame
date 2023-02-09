@@ -1,6 +1,9 @@
 ﻿@using Models; 
 
-<div class="player-car @color-car @crash @lights" style="@styles"></div>
+<div>
+    <div class="player-car @color-car @crash" style="@styles"></div>
+    <div class="@lights @crash" style="@styles" />
+</div>
 
 @code {
     [Parameter]

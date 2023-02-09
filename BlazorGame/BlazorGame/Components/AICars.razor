@@ -2,9 +2,11 @@
 
 @foreach (var aiCar in Manager.Cars)
 {
-    <div class="ai-car @GetColor(aiCar)-car @GetCss(aiCar)" style="@GetStyles(aiCar)" />
+    <div>
+        <div class="ai-car @GetColor(aiCar)-car @GetCss(aiCar)" style="@GetStyles(aiCar)" />
+        <div class="@GetLightsCss(aiCar)" style="@GetStyles(aiCar)"></div>
+    </div>
 }
-
 
 @code {
     [Parameter]
@@ -22,10 +24,16 @@
     private string GetCss(AICarModel model)
     {
         var crash = model.HasCollision ? "car-crash" : string.Empty;
-        var lights = StageManager.CurrentStage.IsNightTime ? "ai-car-lights" : "";
-        return $"{crash} {lights}";
+        return $"{crash}";
     }
 
+    private string GetLightsCss(AICarModel model)
+    {
+        var carCss = GetCss(model);
+        var lights = StageManager.CurrentStage.IsNightTime ? "ai-car-lights" : "";
+        return $"{carCss} {lights}";
+    }
+    
     private string GetStyles(AICarModel model)
     {
         return $"top: {model.Top}px; left: {model.Left}px; height: {model.Height}px; width: {model.Width}px";

@@ -134,7 +134,12 @@ h1 {
 }
 
 .player-car-lights {
+    position: absolute;
+    background-size: auto;
+    background-color: #ffffff50;
+    border-radius: 90px;
     box-shadow: 1px -30px 35px #FFFFFF;
+    z-index: -10;
 }
 
 .ai-car {
@@ -149,7 +154,12 @@ h1 {
 }
 
 .ai-car-lights {
+    position: absolute;
+    background-size: auto;
+    background-color: #ffffff50;
+    border-radius: 90px;
     box-shadow: 1px -30px 35px #FFFFFF;
+    z-index: -10;
 }
 
 .red-car {
