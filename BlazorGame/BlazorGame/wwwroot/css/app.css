@@ -282,4 +282,7 @@ h1 {
         z-index: -2;
     }
 
+    .road-night {
+        border-bottom: 310px solid #0e0d0d;
+    }
 }
