@@ -52,7 +52,7 @@ h1 {
 }
 
 .sky-rural {
-    background-image: url(../images/sky/sky-rural.png);
+    background-image: url(../images/sky/sky-rural-1.png);
 }
 
 .sky-desert {
@@ -85,7 +85,7 @@ h1 {
 }
 
 .ground-rural {
-    background-image: url(../images/ground/ground-rural.png);
+    background-image: url(../images/ground/ground-rural-1.png);
 }
 
 .ground-desert {
@@ -293,6 +293,6 @@ h1 {
     }
 
     .road-night {
-        border-bottom: 310px solid #0e0d0d;
+        border-bottom: 50vh solid #0e0d0d;
     }
 }
