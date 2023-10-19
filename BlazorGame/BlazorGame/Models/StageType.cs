@@ -3,6 +3,7 @@
     public enum StageType
     {
         Rural,
+        Sunset,
         Desert,
         Night,
         Alpine,

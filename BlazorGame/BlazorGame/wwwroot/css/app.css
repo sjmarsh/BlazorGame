@@ -55,6 +55,10 @@ h1 {
     background-image: url(../images/sky/sky-rural-1.png);
 }
 
+.sky-sunset {
+    background-image: url(../images/sky/sky-sunset.png);
+}
+
 .sky-desert {
     background-image: url(../images/sky/sky-desert.png);
 }
@@ -86,6 +90,10 @@ h1 {
 
 .ground-rural {
     background-image: url(../images/ground/ground-rural-1.png);
+}
+
+.ground-sunset {
+    background-image: url(../images/ground/ground-sunset.png);
 }
 
 .ground-desert {
