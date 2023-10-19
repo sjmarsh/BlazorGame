@@ -59,13 +59,18 @@ h1 {
     background-image: url(../images/sky/sky-sunset.png);
 }
 
+.sky-night {
+    background-image: url(../images/sky/sky-night.png);
+}
+
+.sky-sunrise {
+    background-image: url(../images/sky/sky-sunrise.png);
+}
+
 .sky-desert {
     background-image: url(../images/sky/sky-desert.png);
 }
 
-.sky-night {
-    background-image: url(../images/sky/sky-night.png);
-}
 
 .sky-alpine {
     background-image: url(../images/sky/sky-alpine.png);
@@ -96,12 +101,16 @@ h1 {
     background-image: url(../images/ground/ground-sunset.png);
 }
 
-.ground-desert {
-    background-image: url(../images/ground/ground-desert.png);
-}
-
 .ground-night {
     background-image: url(../images/ground/ground-night.png);
+}
+
+.ground-sunrise {
+    background-image: url(../images/ground/ground-sunrise.png);
+}
+
+.ground-desert {
+    background-image: url(../images/ground/ground-desert.png);
 }
 
 .ground-alpine {

@@ -4,8 +4,9 @@
     {
         Rural,
         Sunset,
-        Desert,
         Night,
+        Sunrise,
+        Desert,
         Alpine,
         City,
         Coast

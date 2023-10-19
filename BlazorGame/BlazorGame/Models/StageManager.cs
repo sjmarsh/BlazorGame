@@ -63,10 +63,11 @@ namespace BlazorGame.Models
                 new Stage { Number = 1, StageType = StageType.Rural, DurationMinutes = 1, Speed = 1.2 },
                 new Stage { Number = 2, StageType = StageType.Sunset, DurationMinutes = 1, Speed = 1.5, IsNightTime = true },
                 new Stage { Number = 3, StageType = StageType.Night, DurationMinutes = 1, Speed = 2, IsNightTime = true },
-                new Stage { Number = 4, StageType = StageType.Desert, DurationMinutes = 1, Speed = 2.5 },
-                new Stage { Number = 5, StageType = StageType.Alpine, DurationMinutes = 1, Speed = 2, ShowFog = true },
-                new Stage { Number = 6, StageType = StageType.City, DurationMinutes = 1, Speed = 3 },
-                new Stage { Number = 7, StageType = StageType.Coast, DurationMinutes = 1, Speed = 4 }
+                new Stage { Number = 4, StageType = StageType.Sunrise, DurationMinutes = 1, Speed = 2.2, IsNightTime = true },
+                new Stage { Number = 5, StageType = StageType.Desert, DurationMinutes = 1, Speed = 2.5 },
+                new Stage { Number = 6, StageType = StageType.Alpine, DurationMinutes = 1, Speed = 2, ShowFog = true },
+                new Stage { Number = 7, StageType = StageType.City, DurationMinutes = 1, Speed = 3 },
+                new Stage { Number = 8, StageType = StageType.Coast, DurationMinutes = 1, Speed = 4 }
             };
         } 
         

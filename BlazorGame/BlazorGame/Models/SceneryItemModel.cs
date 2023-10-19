@@ -60,6 +60,11 @@ namespace BlazorGame.Models
                 new SceneryType{ StageType = StageType.Night, Name = "weed" },
                 new SceneryType{ StageType = StageType.Night, Name = "sign" },
 
+                new SceneryType{ StageType = StageType.Sunrise, Name = "cactus" },
+                new SceneryType{ StageType = StageType.Sunrise, Name = "cactus-2" },
+                new SceneryType{ StageType = StageType.Sunrise, Name = "weed" },
+                new SceneryType{ StageType = StageType.Sunrise, Name = "sign" },
+
                 new SceneryType{ StageType = StageType.Desert, Name = "cactus" },
                 new SceneryType{ StageType = StageType.Desert, Name = "cactus-2" },
                 new SceneryType{ StageType = StageType.Desert, Name = "weed" },
