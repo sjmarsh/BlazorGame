@@ -15,7 +15,7 @@ else
             <Checkpoint Hidden="@hideCheckpoint" StageManager="game.StageManager"></Checkpoint>
         </div>                
         <Stats Model="@game.Stats"/>
-        <div class="sky @skyCss"></div>
+        <div class="sky @skyCss" style="@GetBrightnessFilter(game)"></div>
         <div class="ground @groundCss">
             <Scenery Manager="game.SceneryManager"></Scenery>
             <div class="@roadCss">
@@ -63,13 +63,24 @@ else
                 mode = DialogDisplayMode.Complete;
             }
         }
-        
+
         return mode;
     }
 
     private HighScoresDisplayMode GetHighScoresDisplayMode()
     {
         return game != null && game.IsRunning ? HighScoresDisplayMode.Hide : HighScoresDisplayMode.Button;
+    }
+
+    private string GetBrightnessFilter(GameModel game){
+        if (!game.StageManager.CurrentStage.BrightnessOffset.HasValue)
+        {
+            return "";
+        }
+        var brightness = 1.0;
+        brightness += (double)game.Stats.TimePlayed.Seconds / game.Stats.StageNumber / 60 * game.StageManager.CurrentStage.BrightnessOffset.Value;
+        Console.WriteLine(brightness);
+        return $"filter:brightness({brightness})";
     }
 
     private async Task HandleKeyUp(KeyboardEventArgs e)
