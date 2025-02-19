@@ -19,4 +19,4 @@ The game is hosted with an Azure Static Web App here:
 
 Use left and right cursor keys to control the player car.
 
-<img src="https://github.com/sjmarsh/BlazorGame/blob/main/BlazorGame.png?raw=true" />
+<img src="https://github.com/sjmarsh/BlazorGame/blob/main/BlazorGame3.png?raw=true" />
